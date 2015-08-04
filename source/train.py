@@ -203,7 +203,7 @@ def train_mlp(
         this_validation_errors = numpy.sum(validation_errors)
         train_errors.append(this_training_errors)
         valid_errors.append(this_validation_errors)
-        print 'epoch {}, train error {}, valid error {}, learning_rate={}'.format(
+        print 'epoch:{}, train error {}, valid error {}, learning_rate={}'.format(
             epoch_counter, this_training_errors, this_validation_errors,
             model_learning_rate.get_value(borrow=True))
 
