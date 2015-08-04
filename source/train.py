@@ -237,7 +237,7 @@ def train_mlp(
                 optimize(l_index, ul_index)
                 ul_index = (ul_index + 1) if ((ul_index + 1) < numpy.int(n_ul_train_batches)) else 0
             else:
-                optimize(l_index, ul_index)
+                optimize(l_index)
             l_index = (l_index + 1) if ((l_index + 1) < numpy.int(n_train_batches)) else 0
 
         #  permute train set
