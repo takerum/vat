@@ -186,24 +186,6 @@ class MLP(object):
         self.p_y_given_x_adv,mn,vr = self.forward_for_train(self.input+r_adv)
         return -T.mean(T.log(self.p_y_given_x_adv)[T.arange(y.shape[0]),y])
 
-    def kl_cost_exact(self):
-        current_p = theano.gradient.disconnected_grad(self.p_y_given_ul_x_for_train)
-        ##power method to obtain 1st eigen vector ##
-        v = self.srng.normal(size=self.ul_input.shape, dtype=theano.config.floatx)
-        for power_iter in xrange(self.num_power_iter):
-            v = self.get_normalized_vector(v)
-            p_x, ms, vs = self.forward_for_train(self.ul_input)
-            ent = -t.mean(t.sum(current_p * t.log(p_x), axis=1))
-            grad_v = t.sum(t.grad(ent, wrt=self.ul_input) * v)
-            hv = t.grad(grad_v, wrt=self.ul_input)
-            hv = theano.gradient.disconnected_grad(hv)
-            v = hv
-        ##train with virtural adversarial examples##
-        r = self.get_perturbation(v, self.epsilon)
-        ul_p_y_given_x_alt_adv_p, ms, vs = self.forward_for_train(self.ul_input + r)
-        # return t.mean(t.sum(self.ul_p_y_given_x_for_train*(t.log(self.ul_p_y_given_x_for_train)-t.log(ul_p_y_given_x_alt_adv_p)),axis=1))
-        return -t.mean(t.sum(current_p * (t.log(ul_p_y_given_x_alt_adv_p)), axis=1))
-
     def get_perturbation(self, dir, epsilon):
         if (self.norm_constraint == 'max'):
             print 'perturb:max'

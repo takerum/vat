@@ -46,8 +46,8 @@ def train_mlp(
         learning_rate_decay,
         n_epochs,
         n_it_batches,
-        batch_size=100,
-        ul_batch_size=250,
+        m_batch_size=100,
+        m_ul_batch_size=250,
         cost_type='vat',
         lamb=1.0,
         epsilon=0.05,
@@ -70,26 +70,26 @@ def train_mlp(
         train_set_x, train_set_y = dataset[0]
     else:
         dataset = load_mnist_for_validation(n_l=n_l, n_v=n_v, rng=rng)
-        train_set_x, train_set_y, train_set_ul_x = dataset[0]
+        train_set_x, train_set_y, ul_train_set_x = dataset[0]
     valid_set_x, valid_set_y = dataset[1]
-    n_train_batches = numpy.ceil((train_set_x.get_value(borrow=True).shape[0]) / numpy.float(batch_size))
-    n_valid_batches = numpy.ceil((valid_set_x.get_value(borrow=True).shape[0]) / numpy.float(batch_size))
+    n_train_batches = numpy.ceil((train_set_x.get_value(borrow=True).shape[0]) / numpy.float(m_batch_size))
+    n_valid_batches = numpy.ceil((valid_set_x.get_value(borrow=True).shape[0]) / numpy.float(m_batch_size))
 
     print '... building the model'
     # define a classifier
     x = T.matrix('x')
     y = T.ivector('y')
     if (semi_supervised):
-        n_ul_train_batches = numpy.ceil((train_set_ul_x.get_value(borrow=True).shape[0]) / numpy.float(ul_batch_size))
+        n_ul_train_batches = numpy.ceil((ul_train_set_x.get_value(borrow=True).shape[0]) / numpy.float(m_ul_batch_size))
         ul_x = T.matrix('ul_x')
         classifier = mlp_ss.MLP_SS(rng=rng, input=x, ul_input=ul_x, layer_sizes=layer_sizes, activations=activations,
                                    epsilon=epsilon, lamb=lamb,
-                                   m_batch_size=batch_size, m_ul_batch_size=ul_batch_size,
+                                   m_batch_size=m_batch_size, m_ul_batch_size=m_ul_batch_size,
                                    num_power_iter=num_power_iter, norm_constraint=norm_constraint)
     else:
         classifier = mlp.MLP(rng=rng, input=x, layer_sizes=layer_sizes, activations=activations, epsilon=epsilon,
                              lamb=lamb,
-                             m_batch_size=batch_size, num_power_iter=num_power_iter, norm_constraint=norm_constraint)
+                             m_batch_size=m_batch_size, num_power_iter=num_power_iter, norm_constraint=norm_constraint)
 
     # define a training_cost
     if (cost_type == 'mle'):
@@ -125,23 +125,23 @@ def train_mlp(
     # compile optimization function
     index = T.lscalar()
     if (semi_supervised):
-        upd_ul_tr_ind, n_ul_x_0 = update_train_ind(train_set_ul_x, None, ind)
+        upd_ul_tr_ind, n_ul_x_0 = update_train_ind(ul_train_set_x, None, ind)
         permute_ul_train_set = theano.function(inputs=[ind], outputs=n_ul_x_0, updates=upd_ul_tr_ind)
         ul_index = T.lscalar()
         optimize = theano.function(inputs=[index, ul_index], outputs=cost,
                                    updates=updates,
                                    givens={
-                                       x: train_set_x[batch_size * index:batch_size * (index + 1)],
-                                       y: train_set_y[batch_size * index:batch_size * (index + 1)],
-                                       ul_x: train_set_ul_x[ul_batch_size * ul_index:ul_batch_size * (ul_index + 1)]},
+                                       x: train_set_x[m_batch_size * index:m_batch_size * (index + 1)],
+                                       y: train_set_y[m_batch_size * index:m_batch_size * (index + 1)],
+                                       ul_x: ul_train_set_x[m_ul_batch_size * ul_index:m_ul_batch_size * (ul_index + 1)]},
                                    on_unused_input='warn'
                                    )
     else:
         optimize = theano.function(inputs=[index], outputs=cost,
                                    updates=updates,
                                    givens={
-                                       x: train_set_x[batch_size * index:batch_size * (index + 1)],
-                                       y: train_set_y[batch_size * index:batch_size * (index + 1)]},
+                                       x: train_set_x[m_batch_size * index:m_batch_size * (index + 1)],
+                                       y: train_set_y[m_batch_size * index:m_batch_size * (index + 1)]},
                                    on_unused_input='warn'
                                    )
 
@@ -149,37 +149,37 @@ def train_mlp(
     training_error = theano.function(inputs=[index],
                                      outputs=classifier.errors(y),
                                      givens={
-                                         x: train_set_x[batch_size * index:batch_size * (index + 1)],
-                                         y: train_set_y[batch_size * index:batch_size * (index + 1)]}
+                                         x: train_set_x[m_batch_size * index:m_batch_size * (index + 1)],
+                                         y: train_set_y[m_batch_size * index:m_batch_size * (index + 1)]}
                                      )
     validation_error = theano.function(inputs=[index],
                                        outputs=classifier.errors(y),
                                        givens={
-                                           x: valid_set_x[batch_size * index:batch_size * (index + 1)],
-                                           y: valid_set_y[batch_size * index:batch_size * (index + 1)]}
+                                           x: valid_set_x[m_batch_size * index:m_batch_size * (index + 1)],
+                                           y: valid_set_y[m_batch_size * index:m_batch_size * (index + 1)]}
                                        )
     train_nll = theano.function(inputs=[index],
                                 outputs=classifier.neg_log_likelihood(y),
                                 givens={
-                                    x: train_set_x[batch_size * index:batch_size * (index + 1)],
-                                    y: train_set_y[batch_size * index:batch_size * (index + 1)]}
+                                    x: train_set_x[m_batch_size * index:m_batch_size * (index + 1)],
+                                    y: train_set_y[m_batch_size * index:m_batch_size * (index + 1)]}
                                 )
     valid_nll = theano.function(inputs=[index],
                                 outputs=classifier.neg_log_likelihood(y),
                                 givens={
-                                    x: valid_set_x[batch_size * index:batch_size * (index + 1)],
-                                    y: valid_set_y[batch_size * index:batch_size * (index + 1)]}
+                                    x: valid_set_x[m_batch_size * index:m_batch_size * (index + 1)],
+                                    y: valid_set_y[m_batch_size * index:m_batch_size * (index + 1)]}
                                 )
     num_power_iter_for_evalueation_LDS = 10   # num power iter for evaluation LDS
     train_LDS = theano.function(inputs=[index],
                                 outputs=classifier.LDS(num_power_iter=num_power_iter_for_evalueation_LDS),
                                 givens={
-                                    x: train_set_x[batch_size * index:batch_size * (index + 1)]}
+                                    x: train_set_x[m_batch_size * index:m_batch_size * (index + 1)]}
                                 )
     valid_LDS = theano.function(inputs=[index],
                                 outputs=classifier.LDS(num_power_iter=num_power_iter_for_evalueation_LDS),
                                 givens={
-                                    x: valid_set_x[batch_size * index:batch_size * (index + 1)]}
+                                    x: valid_set_x[m_batch_size * index:m_batch_size * (index + 1)]}
                                 )
 
     print '... training'
@@ -244,7 +244,7 @@ def train_mlp(
         rand_ind = numpy.asarray(rng.permutation(train_set_x.get_value().shape[0]), dtype='int32')
         permute_train_set(rand_ind)
         if (semi_supervised):
-            ul_rand_ind = numpy.asarray(rng.permutation(train_set_ul_x.get_value().shape[0]), dtype='int32')
+            ul_rand_ind = numpy.asarray(rng.permutation(ul_train_set_x.get_value().shape[0]), dtype='int32')
             permute_ul_train_set(ul_rand_ind)
 
         decay_model_learning_rate()
@@ -268,13 +268,13 @@ def train_mlp(
 if __name__ == '__main__':
     # supervised learning for MNIST dataset
     train_mlp(n_l=60000,layer_sizes=[28 ** 2, 1200, 600, 300, 150, 10],activations=['ReLU', 'ReLU', 'ReLU', 'ReLU', 'Softmax'],
-              initial_model_learning_rate=0.002,learning_rate_decay=0.9,n_epochs=100,n_it_batches=600,batch_size=100,
+              initial_model_learning_rate=0.002,learning_rate_decay=0.9,n_epochs=100,n_it_batches=600, m_batch_size=100,
               cost_type='vat',lamb=1.0,epsilon=0.075,num_power_iter=1,norm_constraint='L2',
               random_seed=1,full_train=True,monitoring_cost_during_training=False)
 
     # semi-supervised learning for MNIST dataset
     #train_mlp(n_l=100, layer_sizes=[28 ** 2, 1200, 1200, 10], activations=['ReLU', 'ReLU', 'Softmax'],
     #          initial_model_learning_rate=0.002, learning_rate_decay=0.9, n_epochs=100, n_it_batches=500,
-    #          batch_size=100, ul_batch_size=250,
+    #          m_batch_size=100, m_ul_batch_size=250,
     #          cost_type='vat', lamb=1.0, epsilon=0.01, num_power_iter=1, norm_constraint='L2',
     #          random_seed=1, semi_supervised=True, n_v=1000, full_train=False, monitoring_cost_during_training=False)
