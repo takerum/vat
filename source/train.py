@@ -266,13 +266,15 @@ def train_mlp(
 
 
 if __name__ == '__main__':
-    # train_mlp(n_l=60000,layer_sizes=[28 ** 2, 1200, 600, 300, 150, 10],activations=['ReLU', 'ReLU', 'ReLU', 'ReLU', 'Softmax'],
-    #          initial_model_learning_rate=0.002,learning_rate_decay=0.9,n_epochs=100,n_it_batches=600,batch_size=100,
-    #          cost_type='vat',lamb=1.0,epsilon=0.075,num_power_iter=1,norm_constraint='L2',
-    #          random_seed=1,full_train=True,monitoring_cost_during_training=False)
+    # supervised learning for MNIST dataset
+    train_mlp(n_l=60000,layer_sizes=[28 ** 2, 1200, 600, 300, 150, 10],activations=['ReLU', 'ReLU', 'ReLU', 'ReLU', 'Softmax'],
+              initial_model_learning_rate=0.002,learning_rate_decay=0.9,n_epochs=100,n_it_batches=600,batch_size=100,
+              cost_type='vat',lamb=1.0,epsilon=0.075,num_power_iter=1,norm_constraint='L2',
+              random_seed=1,full_train=True,monitoring_cost_during_training=False)
 
-    train_mlp(n_l=100, layer_sizes=[28 ** 2, 1200, 1200, 10], activations=['ReLU', 'ReLU', 'Softmax'],
-              initial_model_learning_rate=0.002, learning_rate_decay=0.9, n_epochs=100, n_it_batches=500,
-              batch_size=100, ul_batch_size=250,
-              cost_type='vat', lamb=1.0, epsilon=0.01, num_power_iter=1, norm_constraint='L2',
-              random_seed=1, semi_supervised=True, n_v=1000, full_train=True, monitoring_cost_during_training=False)
+    # semi-supervised learning for MNIST dataset
+    #train_mlp(n_l=100, layer_sizes=[28 ** 2, 1200, 1200, 10], activations=['ReLU', 'ReLU', 'Softmax'],
+    #          initial_model_learning_rate=0.002, learning_rate_decay=0.9, n_epochs=100, n_it_batches=500,
+    #          batch_size=100, ul_batch_size=250,
+    #          cost_type='vat', lamb=1.0, epsilon=0.01, num_power_iter=1, norm_constraint='L2',
+    #          random_seed=1, semi_supervised=True, n_v=1000, full_train=False, monitoring_cost_during_training=False)
