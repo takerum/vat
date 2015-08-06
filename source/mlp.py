@@ -22,7 +22,7 @@ class MLP(object):
         return y
 
     def get_normalized_vector(self,v):
-        v = v / (1e-15 + T.max(T.abs_(v), axis=1, keepdims=True))
+        v = v / (1e-6 + T.max(T.abs_(v), axis=1, keepdims=True))
         v_2 = T.sum(v**2,axis=1,keepdims=True)
         return v / T.sqrt(1e-6 + v_2)
 
