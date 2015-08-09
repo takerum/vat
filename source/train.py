@@ -1,4 +1,6 @@
 import numpy
+import cPickle
+import sys
 from collections import OrderedDict
 
 import theano
@@ -39,25 +41,28 @@ def ADAM(classifier, cost, lr, updates):
 
 
 def train_mlp(
-        n_l,
-        layer_sizes,
-        activations,
-        initial_model_learning_rate,
-        learning_rate_decay,
-        n_epochs,
-        n_it_batches,
-        m_batch_size=100,
-        m_ul_batch_size=250,
-        cost_type='vat',
-        lamb=1.0,
-        epsilon=0.05,
-        num_power_iter=1,
-        norm_constraint='L2',
-        random_seed=1,
-        semi_supervised=False,
-        n_v=10000,
-        full_train=False,
-        monitoring_cost_during_training=False):
+        n_l, # Number of labeled samples.
+        layer_sizes, # Layer sizes of neural network. For example, layer_sizes = [784,1200,1200,10] indicates 784 input nodes and 2 hidden layers and 1200 hidden nodes and 10 output nodes.
+        activations, # Specification of activation functions.
+        initial_model_learning_rate, # Initial learning rate of ADAM.
+        learning_rate_decay, # Learning rate decay of ADAM.
+        n_epochs, # Number of training epochs,
+        n_it_batches, # Number of parameter update of mini-batch stochastic gradient in each epoch.
+        m_batch_size=100, # Number of mini-batch size.
+        m_ul_batch_size=250, # Number of mini-batch size for calculation of LDS (semi-supervised learning only)
+        cost_type='vat', # Cost type. 'mle' is no regularization, 'at' is Adversarial training, 'vat' is Virtual Adversarial training (ours)
+        lamb=1.0, # Balance parameter.
+        epsilon=0.05, # Norm constraint parameter.
+        num_power_iter=1, # Number of iterations of power method.
+        norm_constraint='L2', # Specification of norm constraint. 'max' is [L-infinity norm] and 'L2' is [L2 norm].
+        random_seed=1, # Random seed.
+        semi_supervised=False, # Experiment on semi-supervised learning or not.
+        n_v=10000, # Number of validation samples.
+        full_train=False, # Training with all of training samples ( for evaluation on test samples )
+        monitoring_cost_during_training=False # Monitoring transitions of cost during training.
+):
+
+
 
     sys.setrecursionlimit(10000)
 
@@ -266,6 +271,7 @@ def train_mlp(
 
 
 if __name__ == '__main__':
+
     # supervised learning for MNIST dataset
     train_mlp(n_l=60000,layer_sizes=[28 ** 2, 1200, 600, 300, 150, 10],activations=['ReLU', 'ReLU', 'ReLU', 'ReLU', 'Softmax'],
               initial_model_learning_rate=0.002,learning_rate_decay=0.9,n_epochs=100,n_it_batches=600, m_batch_size=100,
