@@ -151,13 +151,13 @@ class MLP(object):
         return sup_cost
 
     def cost_vat(self, y):
-        print "cost of Virtual Adversarial training"
+        print "cost of virtual adversarial training"
         sup_cost = self.ll_cost(y)
-        LDS_cost = self.LDS_cost()
-        return sup_cost + self.lamb * LDS_cost
+        vat_cost = self.vat_cost()
+        return sup_cost + self.lamb * vat_cost
 
     def cost_at(self, y):
-        print "cost of Adversarial training"
+        print "cost of adversarial training"
         sup_cost = self.ll_cost(y)
         at_cost = self.at_cost(y)
         return sup_cost + self.lamb * at_cost
@@ -165,7 +165,7 @@ class MLP(object):
     def ll_cost(self, y):
         return -T.mean(T.log(self.p_y_given_x_for_train)[T.arange(y.shape[0]), y])
 
-    def LDS_cost(self):
+    def vat_cost(self):
         p = self.p_y_given_x_for_train
         v = self.srng.normal(size=self.input.shape, dtype=theano.config.floatX)
         for power_iter in xrange(self.num_power_iter):

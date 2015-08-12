@@ -36,7 +36,7 @@ class MLP_SS(mlp.MLP):
         normalized_input = self.gamma_list[l_ind] * (input - mean) / T.sqrt(1e-6 + var)  + self.beta_list[l_ind]
         return normalized_input
 
-    def LDS_cost(self):
+    def vat_cost(self):
         p = self.ul_p_y_given_x_for_train
         v = self.srng.normal(size=self.ul_input.shape, dtype=theano.config.floatX)
         for power_iter in xrange(self.num_power_iter):
