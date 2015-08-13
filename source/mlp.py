@@ -129,16 +129,16 @@ class MLP(object):
 
     def LDS(self,num_power_iter):
         p = self.p_y_given_x
-        v = self.srng.normal(size=self.input.shape, dtype=theano.config.floatX)
+        d = self.srng.normal(size=self.input.shape, dtype=theano.config.floatX)
         for power_iter in xrange(num_power_iter):
-            v = self.xi * self.get_normalized_vector(v)
-            p_v = self.forward(self.input + v)
-            kl = -T.mean(T.sum(p * T.log(p_v), axis=1))
-            Hv = T.grad(kl, wrt=v) / self.xi
-            Hv = theano.gradient.disconnected_grad(Hv)
-            v = Hv
+            d = self.xi * self.get_normalized_vector(d)
+            p_d = self.forward(self.input + d)
+            kl = -T.mean(T.sum(p * T.log(p_d), axis=1))
+            Hd = T.grad(kl, wrt=d) / self.xi
+            Hd = theano.gradient.disconnected_grad(Hd)
+            d = Hd
         ##train with virtural adversarial examples##
-        r_vadv = self.get_perturbation(v, self.epsilon)
+        r_vadv = self.get_perturbation(d, self.epsilon)
         p_r_vadv = self.forward(self.input + r_vadv)
         p_hat = theano.gradient.disconnected_grad(p)
         return -T.mean(T.sum(p_hat * (T.log(p_hat) - T.log(p_r_vadv)), axis=1))
@@ -167,15 +167,15 @@ class MLP(object):
 
     def vat_cost(self):
         p = self.p_y_given_x_for_train
-        v = self.srng.normal(size=self.input.shape, dtype=theano.config.floatX)
+        d = self.srng.normal(size=self.input.shape, dtype=theano.config.floatX)
         for power_iter in xrange(self.num_power_iter):
-            v = self.xi * self.get_normalized_vector(v)
-            p_v, ms, vs = self.forward_for_train(self.input + v)
-            kl = -T.mean(T.sum(p * T.log(p_v), axis=1))
-            Hv = T.grad(kl, wrt=v) / self.xi
-            Hv = theano.gradient.disconnected_grad(Hv)
-            v = Hv
-        r_vadv = self.get_perturbation(v, self.epsilon)
+            d = self.xi * self.get_normalized_vector(d)
+            p_d, ms, vs = self.forward_for_train(self.input + d)
+            kl = -T.mean(T.sum(p * T.log(p_d), axis=1))
+            Hd = T.grad(kl, wrt=d) / self.xi
+            Hd = theano.gradient.disconnected_grad(Hd)
+            d = Hd
+        r_vadv = self.get_perturbation(d, self.epsilon)
         p_y_given_x_vadv, ms, vs = self.forward_for_train(self.input + r_vadv)
         p_hat = theano.gradient.disconnected_grad(p)
         return -T.mean(T.sum(p_hat * (T.log(p_y_given_x_vadv)), axis=1))

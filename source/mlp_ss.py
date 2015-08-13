@@ -38,15 +38,15 @@ class MLP_SS(mlp.MLP):
 
     def vat_cost(self):
         p = self.ul_p_y_given_x_for_train
-        v = self.srng.normal(size=self.ul_input.shape, dtype=theano.config.floatX)
+        d = self.srng.normal(size=self.ul_input.shape, dtype=theano.config.floatX)
         for power_iter in xrange(self.num_power_iter):
-            v = self.xi * self.get_normalized_vector(v)
-            p_v, ms, vs = self.forward_for_train(self.ul_input + v)
-            kl = -T.mean(T.sum(p * T.log(p_v), axis=1))
-            Hv = T.grad(kl, wrt=v) / self.xi
-            Hv = theano.gradient.disconnected_grad(Hv)
-            v = Hv
-        r_vadv = self.get_perturbation(v, self.epsilon)
+            d = self.xi * self.get_normalized_vector(d)
+            p_d, ms, vs = self.forward_for_train(self.ul_input + d)
+            kl = -T.mean(T.sum(p * T.log(p_d), axis=1))
+            Hd = T.grad(kl, wrt=d) / self.xi
+            Hd = theano.gradient.disconnected_grad(Hd)
+            d = Hd
+        r_vadv = self.get_perturbation(d, self.epsilon)
         ul_p_y_given_x_vadv, ms, vs = self.forward_for_train(self.ul_input + r_vadv)
         p_hat = theano.gradient.disconnected_grad(p)
         return -T.mean(T.sum(p_hat * (T.log(ul_p_y_given_x_vadv)), axis=1))
