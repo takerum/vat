@@ -153,19 +153,19 @@ class MLP(object):
     def cost_vat(self, y):
         print "cost of virtual adversarial training"
         sup_cost = self.ll_cost(y)
-        vat_cost = self.vat_cost()
+        vat_cost = self.reg_vat()
         return sup_cost + self.lamb * vat_cost
 
     def cost_at(self, y):
         print "cost of adversarial training"
         sup_cost = self.ll_cost(y)
-        at_cost = self.at_cost(y)
+        at_cost = self.reg_at(y)
         return sup_cost + self.lamb * at_cost
 
     def ll_cost(self, y):
         return -T.mean(T.log(self.p_y_given_x_for_train)[T.arange(y.shape[0]), y])
 
-    def vat_cost(self):
+    def reg_vat(self):
         p = self.p_y_given_x_for_train
         d = self.srng.normal(size=self.input.shape, dtype=theano.config.floatX)
         for power_iter in xrange(self.num_power_iter):
@@ -180,7 +180,7 @@ class MLP(object):
         p_hat = theano.gradient.disconnected_grad(p)
         return -T.mean(T.sum(p_hat * (T.log(p_y_given_x_vadv)), axis=1))
 
-    def at_cost(self, y):
+    def reg_at(self, y):
         dL_dx = theano.gradient.disconnected_grad(T.grad(self.ll_cost(y),wrt=self.input))
         r_adv = self.get_perturbation(dL_dx,self.epsilon)
         self.p_y_given_x_adv,mn,vr = self.forward_for_train(self.input+r_adv)
