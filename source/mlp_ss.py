@@ -1,4 +1,3 @@
-import numpy
 import theano
 import theano.tensor as T
 import theano.tensor.shared_randomstreams
