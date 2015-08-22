@@ -257,13 +257,22 @@ def train_mlp(
     print "finished training!"
     # finetune batch mean and var for batch normalization
     print "finetuning batch mean and var for batch normalization..."
-    finetune_batch_mean_and_var = theano.function(inputs=[index],
-                                                  outputs=classifier.finetuning_N,
-                                                  updates=classifier.m_v_updates_for_finetuning,
-                                                  givens={
-                                                      x: train_set_x[m_batch_size * index:m_batch_size * (index + 1)],
-                                                  })
-    [finetune_batch_mean_and_var(i) for i in xrange(numpy.int(numpy.ceil(n_train_batches)))]
+    if(semi_supervised):
+        finetune_batch_mean_and_var = theano.function(inputs=[index],
+                                                      outputs=classifier.finetuning_N,
+                                                      updates=classifier.m_v_updates_for_finetuning,
+                                                      givens={
+                                                          x: ul_train_set_x[m_ul_batch_size * index:m_ul_batch_size * (index + 1)],
+                                                      })
+        [finetune_batch_mean_and_var(i) for i in xrange(numpy.int(numpy.ceil(n_ul_train_batches)))]
+    else:
+        finetune_batch_mean_and_var = theano.function(inputs=[index],
+                                                      outputs=classifier.finetuning_N,
+                                                      updates=classifier.m_v_updates_for_finetuning,
+                                                      givens={
+                                                          x: train_set_x[m_batch_size * index:m_batch_size * (index + 1)],
+                                                      })
+        [finetune_batch_mean_and_var(i) for i in xrange(numpy.int(numpy.ceil(n_train_batches)))]
     print "final errors and costs:"
     monitor_error()
     monitor_cost()

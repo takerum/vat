@@ -20,21 +20,10 @@ class MLP_SS(mlp.MLP):
         self.ul_p_y_given_x_for_train, means_ul, vars_ul = self.forward_for_train(self.ul_input)
         self.p_y_given_x = self.forward(self.input)
         self.ul_p_y_given_x = self.forward(self.ul_input)
-        nmeans = list()
-        nvars = list()
-        for i in xrange(self.num_layer):
-            ratio_l = self.m_batch_size / numpy.float(self.m_batch_size + self.m_ul_batch_size)
-            ratio_ul = self.m_ul_batch_size / numpy.float(self.m_batch_size + self.m_ul_batch_size)
-            nmeans.append((ratio_l * means[i] + ratio_ul * means_ul[i]))
-            nvars.append((ratio_l * vars_[i] + ratio_ul * vars_ul[i]))
-        self.m_v_updates_during_training = self.updates_mean_and_var(nmeans, nvars)
 
-    def normalize(self, input, l_ind):
-        mean = T.mean(self.mean_list[l_ind], axis=0, keepdims=True)
-        s_batch_size = self.m_batch_size + self.m_ul_batch_size
-        var = (s_batch_size / (s_batch_size - 1)) * T.mean(self.var_list[l_ind], axis=0, keepdims=True)
-        normalized_input = self.gamma_list[l_ind] * (input - mean) / T.sqrt(1e-6 + var)  + self.beta_list[l_ind]
-        return normalized_input
+        self.m_v_updates_during_training = self.updates_mean_and_var(means_ul, vars_ul, self.m_ul_batch_size)
+        self.m_v_updates_for_finetuning = self.updates_mean_and_var(means_ul, vars_ul, self.m_ul_batch_size,finetune=True)
+
 
     def reg_vat(self):
         p = self.ul_p_y_given_x_for_train
