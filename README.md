@@ -12,6 +12,6 @@ python 2.7, numpy 1.9, theano 0.7.0
  
 
 I also implemented virtual adversarial training with Chainer(http://chainer.org/).
-The codes are also available on github https://github.com/takerum/vat_chainer/
+The codes are also available on github https://github.com/takerum/vat_chainer/.
 
 
