@@ -47,9 +47,8 @@ def load_mnist_for_test():
 
     train_set_x, train_set_y = _shared_dataset((train_set_x, train_set_y))
     test_set_x, test_set_y = _shared_dataset((test_set_x, test_set_y))
-    valid_set_x, valid_set_y = (test_set_x,test_set_y)
 
-    return [(train_set_x, train_set_y), (valid_set_x, valid_set_y),(test_set_x,test_set_y)]
+    return [(train_set_x, train_set_y), (test_set_x, test_set_y)]
 
 def load_mnist_for_validation(rng, n_l, n_v=1000):
     dataset = load_original_mnist_dataset()
