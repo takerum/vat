@@ -263,7 +263,7 @@ def train_mlp(
                                                       outputs=classifier.finetuning_N,
                                                       updates=classifier.m_v_updates_for_finetuning,
                                                       givens={
-                                                          x: ul_train_set_x[m_ul_batch_size * index:m_ul_batch_size * (index + 1)],
+                                                          ul_x: ul_train_set_x[m_ul_batch_size * index:m_ul_batch_size * (index + 1)],
                                                       })
         [finetune_batch_mean_and_var(i) for i in xrange(numpy.int(numpy.ceil(n_ul_train_batches)))]
     else:
