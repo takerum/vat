@@ -53,7 +53,7 @@ class MLP(object):
             if (i == self.num_layer - 1):
                 W_values = numpy.zeros((self.layer_sizes[i], self.layer_sizes[i + 1]), dtype=theano.config.floatX)
             else:
-                W_values = numpy.asarray(0.001 * rng.standard_normal(
+                W_values = numpy.asarray(0.01 * rng.standard_normal(
                     size=(self.layer_sizes[i], self.layer_sizes[i + 1])), dtype=theano.config.floatX)
             self.W_list.append(theano.shared(value=W_values, name='W'))
 
