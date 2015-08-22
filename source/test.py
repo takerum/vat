@@ -31,4 +31,4 @@ if __name__ == '__main__':
                                        )
 
     test_errors = [test_error(i) for i in xrange(numpy.int(numpy.ceil(n_test_batches)))]
-    print "the number of misclassified examples:" + str(numpy.sum(test_errors)) + ", and test error rate(%):" + str(100*numpy.sum(test_errors)/numpy.float(test_set_x.get_value(borrow=True).shape[0]))
+    print "the number of misclassified examples on test set:" + str(numpy.sum(test_errors)) + ", and test error rate(%):" + str(100*numpy.sum(test_errors)/numpy.float(test_set_x.get_value(borrow=True).shape[0]))
