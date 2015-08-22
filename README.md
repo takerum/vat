@@ -3,7 +3,13 @@ Python codes for reproducing the results on the MNIST dataset in the paper "Dist
 
 You can run an example code in command line:
 ```
-python train.py
+python train.py <filename>
+```
+Then, the trained classifer will be saved with the name of `<filename> `.
+
+You can obtain test accuracy of trained classifier by the following command:
+```
+python test.py <filename>
 ```
 If you find bug or problem, please report it! 
 
