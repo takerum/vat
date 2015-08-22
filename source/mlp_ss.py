@@ -27,7 +27,7 @@ class MLP_SS(mlp.MLP):
             ratio_ul = self.m_ul_batch_size / numpy.float(self.m_batch_size + self.m_ul_batch_size)
             nmeans.append((ratio_l * means[i] + ratio_ul * means_ul[i]))
             nvars.append((ratio_l * vars_[i] + ratio_ul * vars_ul[i]))
-        self.m_v_updates = self.updates_mean_and_var(nmeans, nvars)
+        self.m_v_updates_during_training = self.updates_mean_and_var(nmeans, nvars)
 
     def normalize(self, input, l_ind):
         mean = T.mean(self.mean_list[l_ind], axis=0, keepdims=True)

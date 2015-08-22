@@ -58,7 +58,7 @@ def train_mlp(
         random_seed=1, # Random seed.
         semi_supervised=False, # Experiment on semi-supervised learning or not.
         n_v=10000, # Number of validation samples.
-        full_train=False, # Training with all of training samples ( for evaluation on test samples )
+        full_train=False, # Training with all of training samples ( and evaluation on test samples )
         monitoring_cost_during_training=False # Monitoring transitions of cost during training.
 ):
 
@@ -114,7 +114,7 @@ def train_mlp(
                                                     model_learning_rate: model_learning_rate * learning_rate_decay})
     updates = OrderedDict()
     updates = ADAM(classifier, cost, model_learning_rate, updates)
-    updates.update(classifier.m_v_updates)
+    updates.update(classifier.m_v_updates_during_training)
 
     # define permutation of train set
     def update_train_ind(x, y, ind):
@@ -219,8 +219,8 @@ def train_mlp(
         valid_LDSs.append(numpy.mean(validation_LDSs))
         train_LDSs_std.append(numpy.std(training_LDSs))
         valid_LDSs_std.append(numpy.std(validation_LDSs))
-        print 'epoch:' + str(epoch_counter) + ' train_KL:' + str(train_LDSs[-1]) + ' std:' + str(
-            train_LDSs_std[-1]) + ' valid_KL:' + str(
+        print 'epoch:' + str(epoch_counter) + ' train_LDS:' + str(train_LDSs[-1]) + ' std:' + str(
+            train_LDSs_std[-1]) + ' valid_LDS:' + str(
             valid_LDSs[-1]) + ' std:' + str(valid_LDSs_std[-1])
         train_losses = [numpy.mean(train_nll(i)) for i in xrange(numpy.int(numpy.ceil(n_train_batches)))]
         train_nlls.append(numpy.mean(train_losses))
@@ -229,11 +229,11 @@ def train_mlp(
         print 'epoch:' + str(epoch_counter) + ' train neg ll:' + str(
             train_nlls[-1]) + ' valid neg ll:' + str(valid_nlls[-1])
 
-    # error and cost before training
-    monitor_error()
-    monitor_cost()
-
     while epoch_counter < n_epochs:
+        # monitoring error and cost in middle of training
+        monitor_error()
+        monitor_cost() if monitoring_cost_during_training or epoch_counter == 0 else None
+
         epoch_counter = epoch_counter + 1
 
         # parameters update
@@ -245,7 +245,7 @@ def train_mlp(
                 optimize(l_index)
             l_index = (l_index + 1) if ((l_index + 1) < numpy.int(n_train_batches)) else 0
 
-        #  permute train set
+        # permute train set
         rand_ind = numpy.asarray(rng.permutation(train_set_x.get_value().shape[0]), dtype='int32')
         permute_train_set(rand_ind)
         if (semi_supervised):
@@ -254,16 +254,26 @@ def train_mlp(
 
         decay_model_learning_rate()
 
-        # error and cost in middle of training
-        monitor_error()
-        monitor_cost() if monitoring_cost_during_training or epoch_counter == n_epochs else None
+    print "finished training!"
+    # finetune batch mean and var for batch normalization
+    print "finetuning batch mean and var for batch normalization..."
+    finetune_batch_mean_and_var = theano.function(inputs=[index],
+                                                  outputs=classifier.finetuning_N,
+                                                  updates=classifier.m_v_updates_for_finetuning,
+                                                  givens={
+                                                      x: train_set_x[m_batch_size * index:m_batch_size * (index + 1)],
+                                                  })
+    [finetune_batch_mean_and_var(i) for i in xrange(numpy.int(numpy.ceil(n_train_batches)))]
+    print "final errors and costs:"
+    monitor_error()
+    monitor_cost()
 
     classifier.train_errors = train_errors
     classifier.valid_errors = valid_errors
-    classifier.train_KLs = train_LDSs
-    classifier.valid_KLs = valid_LDSs
-    classifier.train_KLs_std = train_LDSs_std
-    classifier.valid_KLs_std = valid_LDSs_std
+    classifier.train_LDSs = train_LDSs
+    classifier.valid_LDSs = valid_LDSs
+    classifier.train_LDSs_std = train_LDSs_std
+    classifier.valid_LDSs_std = valid_LDSs_std
     classifier.train_nlls = train_nlls
     classifier.valid_nlls = valid_nlls
 

@@ -37,7 +37,8 @@ class MLP(object):
         self.m_batch_size = m_batch_size
         self.num_layer = len(layer_sizes) - 1
         self.xi = numpy.float(1.0 * 10 ** -6)
-        self.moving_ave_range = 100
+        self.moving_ave_coeff = 0.9
+        self.finetuning_N = 0;
         print '======hyperparameters======='
         print 'layer_sizes:' + str(layer_sizes)
         print 'activations' + str(self.activations)
@@ -66,8 +67,8 @@ class MLP(object):
             beta_values = numpy.zeros((self.layer_sizes[i+1],), dtype=theano.config.floatX)
             self.gamma_list.append(theano.shared(gamma_values))
             self.beta_list.append(theano.shared(beta_values))
-            var_values = numpy.ones((self.moving_ave_range, self.layer_sizes[i+1]), dtype=theano.config.floatX)
-            mean_values = numpy.zeros((self.moving_ave_range, self.layer_sizes[i+1]), dtype=theano.config.floatX)
+            var_values = numpy.ones((1,self.layer_sizes[i+1]),dtype=theano.config.floatX)
+            mean_values = numpy.zeros((1,self.layer_sizes[i+1]),dtype=theano.config.floatX)
             self.var_list.append(theano.shared(var_values))
             self.mean_list.append(theano.shared(mean_values))
 
@@ -79,17 +80,26 @@ class MLP(object):
         self.p_y_given_x = self.forward(self.input)
 
         self.y_pred = T.argmax(self.p_y_given_x, axis=1)
-        self.m_v_updates = self.updates_mean_and_var(means, vars_)
+        self.m_v_updates_during_training = self.updates_mean_and_var(means, vars_,  self.input.shape[0])
+        self.m_v_updates_for_finetuning = self.updates_mean_and_var(means, vars_, self.input.shape[0], finetune=True)
 
         self.params = self.W_list + self.gamma_list + self.beta_list
 
-    def updates_mean_and_var(self, means, vars):
+    def updates_mean_and_var(self, means, vars, m_batch_size,finetune=False):
         updates = OrderedDict()
+        if(finetune):
+            updates[self.finetuning_N] = self.finetuning_N+1;
+            coeff = 1./(updates[self.finetuning_N]+1)
+        else:
+            updates[self.finetuning_N] = 0
+            coeff = self.moving_ave_coeff
+
+        scale = m_batch_size/(m_batch_size-1.0)
         for i in xrange(self.num_layer):
-            n_mean = self.mean_list[i]
-            updates[n_mean] = T.concatenate((means[i], n_mean[0:-1]), axis=0)
-            n_var = self.var_list[i]
-            updates[n_var] = T.concatenate((vars[i], n_var[0:-1]), axis=0)
+            avg_mean = self.mean_list[i]
+            updates[avg_mean] = (1-coeff)*avg_mean + coeff*means[i]
+            avg_var = self.var_list[i]
+            updates[avg_var] = (1-coeff)*avg_var + coeff*scale*vars[i]
         return updates
 
     def normalize_for_train(self, input, l_ind):
@@ -111,9 +121,7 @@ class MLP(object):
         return next_input, means, vars_
 
     def normalize(self, input, l_ind):
-        mean = T.mean(self.mean_list[l_ind], axis=0, keepdims=True)
-        var = (self.m_batch_size / (self.m_batch_size - 1)) * T.mean(self.var_list[l_ind], axis=0, keepdims=True)
-        normalized_input = self.gamma_list[l_ind] * (input - mean) / T.sqrt(1e-6+var) + self.beta_list[l_ind]
+        normalized_input = self.gamma_list[l_ind] * (input - self.mean_list[l_ind]) / T.sqrt(1e-6+self.var_list[l_ind]) + self.beta_list[l_ind]
         return normalized_input
 
     def forward(self, input):
