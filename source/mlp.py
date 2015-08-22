@@ -67,8 +67,8 @@ class MLP(object):
             beta_values = numpy.zeros((self.layer_sizes[i+1],), dtype=theano.config.floatX)
             self.gamma_list.append(theano.shared(gamma_values))
             self.beta_list.append(theano.shared(beta_values))
-            var_values = numpy.ones((1,self.layer_sizes[i+1]),dtype=theano.config.floatX)
-            mean_values = numpy.zeros((1,self.layer_sizes[i+1]),dtype=theano.config.floatX)
+            var_values = numpy.ones((self.layer_sizes[i+1],),dtype=theano.config.floatX)
+            mean_values = numpy.zeros((self.layer_sizes[i+1],),dtype=theano.config.floatX)
             self.var_list.append(theano.shared(var_values))
             self.mean_list.append(theano.shared(mean_values))
 
@@ -103,8 +103,8 @@ class MLP(object):
         return updates
 
     def normalize_for_train(self, input, l_ind):
-        mean = T.mean(input, axis=0, keepdims=True)
-        var = T.mean((input - mean) ** 2, axis=0, keepdims=True)
+        mean = T.mean(input, axis=0)
+        var = T.mean((input - mean) ** 2, axis=0)
         normalized_input = self.gamma_list[l_ind] * (input - mean) / T.sqrt(1e-6+var) + self.beta_list[l_ind]
         return normalized_input, mean, var
 
