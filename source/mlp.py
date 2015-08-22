@@ -89,7 +89,7 @@ class MLP(object):
         updates = OrderedDict()
         if(finetune):
             updates[self.finetuning_N] = self.finetuning_N+1;
-            coeff = 1/(updates[self.finetuning_N]+1.0)
+            coeff = T.cast(1-1.0/(updates[self.finetuning_N]),'float32')
         else:
             updates[self.finetuning_N] = 0
             coeff = self.moving_ave_coeff
@@ -97,9 +97,9 @@ class MLP(object):
         scale = m_batch_size/(m_batch_size-1.0)
         for i in xrange(self.num_layer):
             avg_mean = self.mean_list[i]
-            updates[avg_mean] = (1-coeff)*avg_mean + coeff*means[i]
+            updates[avg_mean] = coeff*avg_mean + (1-coeff)*means[i]
             avg_var = self.var_list[i] 
-            updates[avg_var] = (1-coeff)*avg_var + coeff*scale*vars[i]
+            updates[avg_var] = coeff*avg_var + (1-coeff)*scale*vars[i]
         return updates
 
     def normalize_for_train(self, input, l_ind):

@@ -255,6 +255,7 @@ def train_mlp(
         decay_model_learning_rate()
 
     print "finished training!"
+
     # finetune batch mean and var for batch normalization
     print "finetuning batch mean and var for batch normalization..."
     if(semi_supervised):
