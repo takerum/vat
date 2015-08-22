@@ -37,8 +37,8 @@ class MLP(object):
         self.m_batch_size = m_batch_size
         self.num_layer = len(layer_sizes) - 1
         self.xi = numpy.float(1.0 * 10 ** -6)
-        self.moving_ave_coeff = 0.9
-        self.finetuning_N = 0;
+        self.moving_ave_coeff = numpy.float(0.9)
+        self.finetuning_N = theano.shared(numpy.int(0));
         print '======hyperparameters======='
         print 'layer_sizes:' + str(layer_sizes)
         print 'activations' + str(self.activations)
@@ -80,8 +80,8 @@ class MLP(object):
         self.p_y_given_x = self.forward(self.input)
 
         self.y_pred = T.argmax(self.p_y_given_x, axis=1)
-        self.m_v_updates_during_training = self.updates_mean_and_var(means, vars_,  self.input.shape[0])
-        self.m_v_updates_for_finetuning = self.updates_mean_and_var(means, vars_, self.input.shape[0], finetune=True)
+        self.m_v_updates_during_training = self.updates_mean_and_var(means, vars_, self.m_batch_size)
+        self.m_v_updates_for_finetuning = self.updates_mean_and_var(means, vars_, self.m_batch_size, finetune=True)
 
         self.params = self.W_list + self.gamma_list + self.beta_list
 
@@ -89,7 +89,7 @@ class MLP(object):
         updates = OrderedDict()
         if(finetune):
             updates[self.finetuning_N] = self.finetuning_N+1;
-            coeff = 1./(updates[self.finetuning_N]+1)
+            coeff = 1/(updates[self.finetuning_N]+1.0)
         else:
             updates[self.finetuning_N] = 0
             coeff = self.moving_ave_coeff
@@ -98,7 +98,7 @@ class MLP(object):
         for i in xrange(self.num_layer):
             avg_mean = self.mean_list[i]
             updates[avg_mean] = (1-coeff)*avg_mean + coeff*means[i]
-            avg_var = self.var_list[i]
+            avg_var = self.var_list[i] 
             updates[avg_var] = (1-coeff)*avg_var + coeff*scale*vars[i]
         return updates
 

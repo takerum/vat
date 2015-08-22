@@ -31,7 +31,7 @@ def ADAM(classifier, cost, lr, updates):
         models_v.append(v)
     for param, gparam, m, v in zip(classifier.params, g_model_params, models_m, models_v):
         beta_1_t = T.cast(beta_1 * lam ** (t - 1), theano.config.floatX)
-        updates[m] = beta_1_t * m + (numpy.float(1.0) - beta_1_t) * gparam
+        updates[m] = beta_1_t * m + (1.0 - beta_1_t) * gparam
         updates[v] = beta_2 * v + (1 - beta_2) * (gparam * gparam)
         m_hat = updates[m] / (1.0 - T.cast(beta_1 ** t, theano.config.floatX))
         v_hat = updates[v] / (1.0 - T.cast(beta_2 ** t, theano.config.floatX))
