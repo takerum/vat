@@ -7,7 +7,7 @@ python train.py <filename>
 ```
 After training, the trained classifer will be saved with the name of `<filename> `.
 
-You can obtain the test accuracy of the trained classifier by the following command:
+You can obtain the test error of the trained classifier by the following command:
 ```
 python test.py <filename>
 ```
