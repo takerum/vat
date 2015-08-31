@@ -145,7 +145,6 @@ class MLP(object):
             Hd = T.grad(kl, wrt=d) / self.xi
             Hd = theano.gradient.disconnected_grad(Hd)
             d = Hd
-        ##train with virtural adversarial examples##
         r_vadv = self.get_perturbation(d, self.epsilon)
         p_r_vadv = self.forward(self.input + r_vadv)
         p_hat = theano.gradient.disconnected_grad(p)
