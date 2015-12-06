@@ -29,7 +29,7 @@ if __name__ == '__main__':
     test_set_x,test_set_y = dataset[1]
     n_test_batches = numpy.ceil((test_set_x.get_value(borrow=True).shape[0]) / numpy.float(m_batch_size))
 
-    trained_model = cPickle.load(open("trained_model/" + args['--load_filename'],'rb'))
+    trained_model = cPickle.load(open("trained_model/" + args['--load_filename'],'rb'))[0]
 
     index = T.iscalar()
     x = T.matrix()
