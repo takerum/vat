@@ -8,8 +8,8 @@ class Softmax(Layer):
 
     def forward(self,x):
         print "Layer/Softmax"
-        if(self.stable):
-            x -= x.max(axis=1,keepdims=True)
+        #if(self.stable):
+        #    x -= x.max(axis=1,keepdims=True)
         e_x = T.exp(x)
         out = e_x / e_x.sum(axis=1, keepdims=True)   
         return out
