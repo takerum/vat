@@ -88,7 +88,7 @@ def train(args):
                                               norm_constraint = args['--norm_constraint'],
                                               num_power_iter = int(args['--num_power_iter']))
     elif(args['--cost_type']=='VAT_finite_diff'):
-        cost = costs.virtual_adversarial_training(x,t,model.forward_train,
+        cost = costs.virtual_adversarial_training_finite_diff(x,t,model.forward_train,
                                               'CE',
                                               epsilon=float(args['--epsilon']),
                                               norm_constraint = args['--norm_constraint'],

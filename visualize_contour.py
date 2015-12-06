@@ -126,6 +126,6 @@ if __name__ == '__main__':
     x_valid =  numpy.asarray(dataset[0][1][0],dtype=theano.config.floatX)
     t_valid =  numpy.asarray(dataset[0][1][1],dtype='int32')
 
-    model = cPickle.load(open('trained_model/' + args['--load_filename'] + '.pkl'))[0]
+    model = cPickle.load(open('trained_model/' + args['--load_filename']))[0]
 
     visualize_contour_for_synthetic_dataset(model,dataset_i,x_train,t_train,dataset[1],with_LDS=True,save_filename=args['--save_filename'])

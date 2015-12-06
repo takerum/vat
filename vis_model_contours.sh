@@ -43,7 +43,7 @@ python visualize_contour.py --load_filename=AT_2.pkl --save_filename=AT_2.pdf --
 #Virtual Adversarial training
 python train_syn.py --cost_type=VAT_finite_diff --num_power_iter=1 --epsilon=0.6 \
         --dataset_filename=syndata_1.pkl --save_filename=VAT_1.pkl
-python train_syn.py --cost_type=VAT_finite_diff --num_power_iter=1 --epsilon=0.4 \
+python train_syn.py --cost_type=VAT_finite_diff --num_power_iter=1 --epsilon=0.5 \
         --dataset_filename=syndata_2.pkl --save_filename=VAT_2.pkl
 python visualize_contour.py --load_filename=VAT_1.pkl --save_filename=VAT_1.pdf --dataset_i=1
 python visualize_contour.py --load_filename=VAT_2.pkl --save_filename=VAT_2.pdf --dataset_i=2
