@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 __author__ = 'TakeruMiyato'
 import layers
-import models
 import optimizers
+import costs
 
 layers = layers
-models = models
 optimizers = optimizers
+costs = costs

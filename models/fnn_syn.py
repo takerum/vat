@@ -1,4 +1,4 @@
-from source.models import FNN
+from fnn import FNN
 from source import layers as L
 
 class FNN_syn(FNN):

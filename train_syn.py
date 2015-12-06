@@ -36,8 +36,8 @@ import cPickle
 
 from source import optimizers
 from source import costs
-from fnn_syn import FNN_syn
-from fnn_syn_dropout import FNN_syn_dropout
+from models.fnn_syn import FNN_syn
+from models.fnn_syn_dropout import FNN_syn_dropout
 
 import os
 import errno

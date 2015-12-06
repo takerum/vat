@@ -40,7 +40,7 @@ import cPickle
 
 from source import optimizers
 from source import costs
-from fnn_mnist_semisup import FNN_MNIST
+from models.fnn_mnist_semisup import FNN_MNIST
 import load_data
 
 
