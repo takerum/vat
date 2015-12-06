@@ -10,7 +10,7 @@ Usage:
 
 Options:
   -h --help                                 Show this screen.
-  --dataset_name=<name>                     [default: syn1dim100]
+  --dataset_name=<name>                     [default: syndata_1]
   --save_name=<name>                        [default: result]
   --num_epochs=<n_ep>                       num_epochs [default: 1000].
   --initial_learning_rate=<lr>              initial_learning_rate [default: 1.0].
@@ -57,7 +57,7 @@ def train(args):
 
     numpy.random.seed(1)
 
-    dataset = cPickle.load(open('datasets/' + args['--dataset_filename']))
+    dataset = cPickle.load(open('dataset/' + args['--dataset_filename']))
     x_train = theano.shared(numpy.asarray(dataset[0][0][0],dtype=theano.config.floatX))
     t_train =  theano.shared(numpy.asarray(dataset[0][0][1],dtype='int32'))
     x_test =  theano.shared(numpy.asarray(dataset[0][1][0],dtype=theano.config.floatX))

@@ -20,7 +20,6 @@ def _shared_dataset(data_xy):
                                            dtype='int32'), borrow=True)
     return shared_x, shared_y
 
-# methods for loading training and test data
 def load_mnist_full():
     dataset = load_mnist_dataset()
 
