@@ -7,7 +7,6 @@ Usage:
   [--layer_sizes=<str>] \
   [--cost_type=<ctype>] \
   [--dropout_rate=<rate>] [--lamb=<lamb>] [--epsilon=<ep>] [--norm_constraint=<nc>] [--num_power_iter=<npi>] \
-  [--monitoring_LDS] [--num_power_iter_for_monitoring_LDS=<npi>] \
   [--num_labeled_samples=<N>] [--num_validation_samples=<N>] \
   [--seed=<N>]
   train.py -h | --help
@@ -27,8 +26,6 @@ Options:
   --epsilon=<ep>                            [default: 2.0].
   --norm_constraint=<nc>                    [default: L2].
   --num_power_iter=<npi>                    [default: 1].
-  --monitoring_LDS
-  --num_power_iter_for_monitoring_LDS=<npi>    [default: 5].
   --num_labeled_samples=<N>                 [default: 1000].
   --num_validation_samples=<N>              [default: 1000].
   --seed=<N>                                [default: 1].
@@ -44,7 +41,7 @@ import cPickle
 from source import optimizers
 from source import costs
 from fnn_mnist_semisup import FNN_MNIST
-
+import load_data
 
 
 import os
@@ -63,7 +60,7 @@ def train(args):
 
     numpy.random.seed(int(args['--seed']))
 
-    dataset = utils.load_mnist_for_semi_sup(n_l=int(args['--num_labeled_samples']),
+    dataset = load_data.load_mnist_for_semi_sup(n_l=int(args['--num_labeled_samples']),
                                             n_v=int(args['--num_validation_samples']))
 
     x_train, t_train, ul_x_train = dataset[0]
@@ -77,7 +74,6 @@ def train(args):
     ul_x = T.matrix()
     t = T.ivector()
 
-
     if(args['--cost_type']=='MLE'):
         cost = costs.cross_entropy_loss(x=x,t=t,forward_func=model.forward_train)
     elif(args['--cost_type']=='L2'):
@@ -89,6 +85,14 @@ def train(args):
                                               epsilon=float(args['--epsilon']),
                                               lamb=float(args['--lamb']),
                                               norm_constraint = args['--norm_constraint'],
+                                              forward_func_for_generating_adversarial_examples=model.forward_no_update_batch_stat)
+    elif(args['--cost_type']=='VAT'):
+        cost = costs.virtual_adversarial_training(x,t,model.forward_train,
+                                              'CE',
+                                              epsilon=float(args['--epsilon']),
+                                              norm_constraint = args['--norm_constraint'],
+                                              num_power_iter = int(args['--num_power_iter']),
+                                              x_for_generating_adversarial_examples = ul_x,
                                               forward_func_for_generating_adversarial_examples=model.forward_no_update_batch_stat)
     elif(args['--cost_type']=='VAT_finite_diff'):
         cost = costs.virtual_adversarial_training_finite_diff(x,t,model.forward_train,
@@ -132,19 +136,7 @@ def train(args):
                               givens={
                                   x:x_test[batch_size*index:batch_size*(index+1)],
                                   t:t_test[batch_size*index:batch_size*(index+1)]})
-    if(args['--monitoring_LDS'] == True):
-        LDS = costs.average_LDS_finite_diff(x,
-                        model.forward_test,
-                        main_obj_type='CE',
-                        epsilon=float(args['--epsilon']),
-                        norm_constraint = args['--norm_constraint'],
-                        num_power_iter = int(args['--num_power_iter_for_monitoring_LDS']))
-        f_LDS_train = theano.function(inputs=[index], outputs=LDS,
-                              givens={
-                                  x:x_train[batch_size*index:batch_size*(index+1)]})
-        f_LDS_test = theano.function(inputs=[index], outputs=LDS,
-                              givens={
-                                  x:x_test[batch_size*index:batch_size*(index+1)]})
+
     f_lr_decay = theano.function(inputs=[],outputs=optimizer.alpha,
                                  updates={optimizer.alpha:theano.shared(numpy.array(args['--learning_rate_decay']).astype(theano.config.floatX))*optimizer.alpha})
     randix = RandomStreams(seed=numpy.random.randint(1234)).permutation(n=x_train.shape[0])
@@ -157,9 +149,6 @@ def train(args):
     statuses['error_train'] = []
     statuses['nll_test'] = []
     statuses['error_test'] = []
-    if(args['--monitoring_LDS']==True):
-        statuses['LDS_train'] = []
-        statuses['LDS_test'] = []
 
 
     n_train = x_train.get_value().shape[0]
@@ -177,17 +166,13 @@ def train(args):
     print "[Epoch]",str(-1)
     print  "nll_train : " , statuses['nll_train'][-1], "error_train : ", statuses['error_train'][-1], \
             "nll_test : " , statuses['nll_test'][-1],  "error_test : ", statuses['error_test'][-1]
-    if(args['--monitoring_LDS']):
-        sum_LDS_train = numpy.sum(numpy.array([f_LDS_train(i) for i in xrange(n_train/batch_size)]))*batch_size
-        sum_LDS_test = numpy.sum(numpy.array([f_LDS_test(i) for i in xrange(n_test/batch_size)]))*batch_size
-        statuses['LDS_train'].append(sum_LDS_train/n_train)
-        statuses['LDS_test'].append(sum_LDS_test/n_test)
-        print "LDS_train : ", statuses['LDS_train'][-1], "LDS_test : " , statuses['LDS_test'][-1]
+
+
+
 
     print "training..."
 
     make_sure_path_exists("./trained_model")
-
 
     l_i = 0
     ul_i = 0
@@ -214,12 +199,7 @@ def train(args):
         print "[Epoch]",str(epoch)
         print  "nll_train : " , statuses['nll_train'][-1], "error_train : ", statuses['error_train'][-1], \
                 "nll_test : " , statuses['nll_test'][-1],  "error_test : ", statuses['error_test'][-1]
-        if(args['--monitoring_LDS']):
-            sum_LDS_train = numpy.sum(numpy.array([f_LDS_train(i) for i in xrange(n_train/batch_size)]))*batch_size
-            sum_LDS_test = numpy.sum(numpy.array([f_LDS_test(i) for i in xrange(n_test/batch_size)]))*batch_size
-            statuses['LDS_train'].append(sum_LDS_train/n_train)
-            statuses['LDS_test'].append(sum_LDS_test/n_test)
-            print "LDS_train : ", statuses['LDS_train'][-1], "LDS_test : " , statuses['LDS_test'][-1]
+
 
         f_lr_decay()
 
@@ -239,12 +219,7 @@ def train(args):
     print "[after finetuning]"
     print  "nll_train : " , statuses['nll_train'][-1], "error_train : ", statuses['error_train'][-1], \
         "nll_test : " , statuses['nll_test'][-1],  "error_test : ", statuses['error_test'][-1]
-    if(args['--monitoring_LDS']):
-        sum_LDS_train = numpy.sum(numpy.array([f_LDS_train(i) for i in xrange(n_train/batch_size)]))*batch_size
-        sum_LDS_test = numpy.sum(numpy.array([f_LDS_test(i) for i in xrange(n_test/batch_size)]))*batch_size
-        statuses['LDS_train'].append(sum_LDS_train/n_train)
-        statuses['LDS_test'].append(sum_LDS_test/n_test)
-        print "LDS_train : ", statuses['LDS_train'][-1], "LDS_test : " , statuses['LDS_test'][-1]
+
     ###########################
 
     make_sure_path_exists("./trained_model")

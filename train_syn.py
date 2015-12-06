@@ -87,6 +87,12 @@ def train(args):
                                               epsilon=float(args['--epsilon']),
                                               norm_constraint = args['--norm_constraint'],
                                               num_power_iter = int(args['--num_power_iter']))
+    elif(args['--cost_type']=='VAT_finite_diff'):
+        cost = costs.virtual_adversarial_training(x,t,model.forward_train,
+                                              'CE',
+                                              epsilon=float(args['--epsilon']),
+                                              norm_constraint = args['--norm_constraint'],
+                                              num_power_iter = int(args['--num_power_iter']))
     nll = costs.cross_entropy_loss(x=x,t=t,forward_func=model.forward_test)
     error = costs.error(x=x,t=t,forward_func=model.forward_test)
 
@@ -114,8 +120,8 @@ def train(args):
                               givens={
                                   x:x_test,
                                   t:t_test})
-    if(args['--monitoring_LDS'] == True):
-        LDS = costs.average_LDS(x,
+    if(args['--monitoring_LDS']):
+        LDS = costs.average_LDS_finite_diff(x,
                         model.forward_test,
                         main_obj_type='CE',
                         epsilon=float(args['--epsilon']),

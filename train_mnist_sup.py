@@ -7,7 +7,6 @@ Usage:
   [--layer_sizes=<str>] \
   [--cost_type=<ctype>] \
   [--dropout_rate=<rate>] [--lamb=<lamb>] [--epsilon=<ep>][--norm_constraint=<nc>][--num_power_iter=<npi>] \
-  [--monitoring_LDS] [--num_power_iter_for_monitoring_LDS=<npi>]\
   [--validation] [--num_validation_samples=<N>] \
   [--seed=<N>]
   train.py -h | --help
@@ -18,15 +17,13 @@ Options:
   --num_epochs=<n_ep>                       num_epochs [default: 100].
   --batch_size=<N>                          batch_size [default: 100].
   --initial_learning_rate=<lr>              initial_learning_rate [default: 0.002].
-  --learning_rate_decay=<lr_decay>          learning_rate_decay [default: 0.95].
-  --layer_sizes=<str>                       layer_sizes [default: 784-1000-500-500-500-500-10]
+  --learning_rate_decay=<lr_decay>          learning_rate_decay [default: 0.9].
+  --layer_sizes=<str>                       layer_sizes [default: 784-1200-600-300-150-10]
   --cost_type=<ctype>                       cost_type [default: MLE].
   --lamb=<lamb>                             [default: 1.0].
   --epsilon=<ep>                            [default: 2.1].
   --norm_constraint=<nc>                    [default: L2].
   --num_power_iter=<npi>                    [default: 1].
-  --monitoring_LDS
-  --num_power_iter_for_monitoring_LDS=<npi>    [default: 10].
   --validation
   --num_validation_samples=<N>              [default: 10000]
   --seed=<N>                                [default: 1]
@@ -45,6 +42,7 @@ import cPickle
 from source import optimizers
 from source import costs
 from fnn_mnist_sup import FNN_MNIST
+import load_data
 
 
 import os
@@ -64,9 +62,9 @@ def train(args):
     numpy.random.seed(int(args['--seed']))
 
     if(args['--validation']):
-        dataset = utils.load_mnist_for_validation(n_v=int(args['--num_validation_samples']))
+        dataset = load_data.load_mnist_for_validation(n_v=int(args['--num_validation_samples']))
     else:
-        dataset = utils.load_mnist_for_test()
+        dataset = load_data.load_mnist_full()
     x_train, t_train = dataset[0]
     x_test, t_test = dataset[1]
 
@@ -89,6 +87,13 @@ def train(args):
                                               epsilon=float(args['--epsilon']),
                                               lamb=float(args['--lamb']),
                                               norm_constraint = args['--norm_constraint'],
+                                              forward_func_for_generating_adversarial_examples=model.forward_no_update_batch_stat)
+    elif(args['--cost_type']=='VAT'):
+        cost = costs.virtual_adversarial_training(x,t,model.forward_train,
+                                              'CE',
+                                              epsilon=float(args['--epsilon']),
+                                              norm_constraint = args['--norm_constraint'],
+                                              num_power_iter = int(args['--num_power_iter']),
                                               forward_func_for_generating_adversarial_examples=model.forward_no_update_batch_stat)
     elif(args['--cost_type']=='VAT_finite_diff'):
         cost = costs.virtual_adversarial_training_finite_diff(x,t,model.forward_train,
@@ -126,19 +131,7 @@ def train(args):
                               givens={
                                   x:x_test[batch_size*index:batch_size*(index+1)],
                                   t:t_test[batch_size*index:batch_size*(index+1)]})
-    if(args['--monitoring_LDS'] == True):
-        LDS = costs.average_LDS_finite_diff(x,
-                        model.forward_test,
-                        main_obj_type='CE',
-                        epsilon=float(args['--epsilon']),
-                        norm_constraint = args['--norm_constraint'],
-                        num_power_iter = int(args['--num_power_iter_for_monitoring_LDS']))
-        f_LDS_train = theano.function(inputs=[index], outputs=LDS,
-                              givens={
-                                  x:x_train[batch_size*index:batch_size*(index+1)]})
-        f_LDS_test = theano.function(inputs=[index], outputs=LDS,
-                              givens={
-                                  x:x_test[batch_size*index:batch_size*(index+1)]})
+
     f_lr_decay = theano.function(inputs=[],outputs=optimizer.alpha,
                                  updates={optimizer.alpha:theano.shared(numpy.array(args['--learning_rate_decay']).astype(theano.config.floatX))*optimizer.alpha})
     randix = RandomStreams(seed=numpy.random.randint(1234)).permutation(n=x_train.shape[0])
@@ -149,10 +142,6 @@ def train(args):
     statuses['error_train'] = []
     statuses['nll_test'] = []
     statuses['error_test'] = []
-    if(args['--monitoring_LDS']==True):
-        statuses['LDS_train'] = []
-        statuses['LDS_test'] = []
-
 
     n_train = x_train.get_value().shape[0]
     n_test = x_test.get_value().shape[0]
@@ -168,12 +157,6 @@ def train(args):
     print "[Epoch]",str(-1)
     print  "nll_train : " , statuses['nll_train'][-1], "error_train : ", statuses['error_train'][-1], \
             "nll_test : " , statuses['nll_test'][-1],  "error_test : ", statuses['error_test'][-1]
-    if(args['--monitoring_LDS']):
-        sum_LDS_train = numpy.sum(numpy.array([f_LDS_train(i) for i in xrange(n_train/batch_size)]))*batch_size
-        sum_LDS_test = numpy.sum(numpy.array([f_LDS_test(i) for i in xrange(n_test/batch_size)]))*batch_size
-        statuses['LDS_train'].append(sum_LDS_train/n_train)
-        statuses['LDS_test'].append(sum_LDS_test/n_test)
-        print "LDS_train : ", statuses['LDS_train'][-1], "LDS_test : " , statuses['LDS_test'][-1]
 
     print "training..."
 
@@ -199,12 +182,6 @@ def train(args):
         print "[Epoch]",str(epoch)
         print  "nll_train : " , statuses['nll_train'][-1], "error_train : ", statuses['error_train'][-1], \
                 "nll_test : " , statuses['nll_test'][-1],  "error_test : ", statuses['error_test'][-1]
-        if(args['--monitoring_LDS']):
-            sum_LDS_train = numpy.sum(numpy.array([f_LDS_train(i) for i in xrange(n_train/batch_size)]))*batch_size
-            sum_LDS_test = numpy.sum(numpy.array([f_LDS_test(i) for i in xrange(n_test/batch_size)]))*batch_size
-            statuses['LDS_train'].append(sum_LDS_train/n_train)
-            statuses['LDS_test'].append(sum_LDS_test/n_test)
-            print "LDS_train : ", statuses['LDS_train'][-1], "LDS_test : " , statuses['LDS_test'][-1]
 
         f_lr_decay()
 
@@ -224,12 +201,6 @@ def train(args):
     print "[after finetuning]"
     print  "nll_train : " , statuses['nll_train'][-1], "error_train : ", statuses['error_train'][-1], \
         "nll_test : " , statuses['nll_test'][-1],  "error_test : ", statuses['error_test'][-1]
-    if(args['--monitoring_LDS']):
-        sum_LDS_train = numpy.sum(numpy.array([f_LDS_train(i) for i in xrange(n_train/batch_size)]))*batch_size
-        sum_LDS_test = numpy.sum(numpy.array([f_LDS_test(i) for i in xrange(n_test/batch_size)]))*batch_size
-        statuses['LDS_train'].append(sum_LDS_train/n_train)
-        statuses['LDS_test'].append(sum_LDS_test/n_test)
-        print "LDS_train : ", statuses['LDS_train'][-1], "LDS_test : " , statuses['LDS_test'][-1]
     ###########################
 
     make_sure_path_exists("./trained_model")
