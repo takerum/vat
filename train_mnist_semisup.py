@@ -35,20 +35,20 @@ Options:
 """
 
 from docopt import docopt
-
-from source.theano import optimizers
-from source.theano import costs
 import numpy
 import theano
 import theano.tensor as T
 from theano.tensor.shared_randomstreams import RandomStreams
 import cPickle
 
-from source.theano import utils
+from source import optimizers
+from source import costs
 from fnn_mnist_semisup import FNN_MNIST
+
+
+
 import os
 import errno
-
 def make_sure_path_exists(path):
     try:
         os.makedirs(path)

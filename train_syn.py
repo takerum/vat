@@ -28,18 +28,20 @@ Options:
 
 from docopt import docopt
 
-from source.theano import optimizers
-from source.theano import costs
+
 import numpy
 import theano
 import theano.tensor as T
 import cPickle
 
+from source import optimizers
+from source import costs
 from fnn_syn import FNN_syn
 from fnn_syn_dropout import FNN_syn_dropout
 
 import os
 import errno
+
 
 def make_sure_path_exists(path):
     try:
