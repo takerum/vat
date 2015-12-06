@@ -1,6 +1,6 @@
 import theano
 import theano.tensor as T
-from source.theano import Layer
+from layer import Layer
 import numpy
 
 from theano.tensor.shared_randomstreams import RandomStreams

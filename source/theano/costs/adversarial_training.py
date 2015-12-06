@@ -2,8 +2,8 @@ import theano
 import theano.tensor as T
 import numpy
 
-from source.theano.costs.cross_entropy_loss import _cross_entropy_loss
-from source.theano.costs.quadratic_loss import _quadratic_loss
+from cross_entropy_loss import _cross_entropy_loss
+from quadratic_loss import _quadratic_loss
 
 def get_main_obj(y,t,nll_type):
     if(nll_type=='CE'):

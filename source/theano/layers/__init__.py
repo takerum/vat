@@ -1,14 +1,14 @@
-from source.theano.layers import relu,lrelu
-from source.theano.layers import linear
-from source.theano.layers import sigmoid
-from source.theano.layers import softmax
-from source.theano.layers import dropout
-from source.theano.layers import batch_normalization
-from source.theano.layers import conv_2d,max_pool_2d
-from source.theano.layers import mat_to_tensor4
-from source.theano.layers import tensor_to_mat
-from source.theano.layers import global_average
-from source.theano.layers import gaussian_noise
+import relu,lrelu
+import linear
+import sigmoid
+import softmax
+import dropout
+import batch_normalization
+import conv_2d,max_pool_2d
+import mat_to_tensor4
+import tensor_to_mat
+import global_average
+import gaussian_noise
 
 Linear = linear.Linear
 Conv_2D = conv_2d.Conv_2D

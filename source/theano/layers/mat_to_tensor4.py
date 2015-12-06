@@ -1,5 +1,5 @@
 import theano.tensor as T
-from source.theano import Layer
+from layer import Layer
 
 class MatToTensor4(Layer):
 

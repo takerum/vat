@@ -3,7 +3,7 @@ import theano.tensor as T
 from theano.tensor.shared_randomstreams import RandomStreams
 import numpy
 
-from source.theano.costs.adversarial_training import get_main_obj,get_normalized_vector,get_perturbation
+from adversarial_training import get_main_obj,get_normalized_vector,get_perturbation
 
 def get_kl(y,y_,main_obj_type,include_ent_term=False):
     if(main_obj_type=='CE'):

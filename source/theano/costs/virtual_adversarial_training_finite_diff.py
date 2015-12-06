@@ -3,8 +3,8 @@ import theano.tensor as T
 from theano.tensor.shared_randomstreams import RandomStreams
 import numpy
 
-from source.theano.costs.adversarial_training import get_main_obj,get_normalized_vector,get_perturbation
-from source.theano.costs.virtual_adversarial_training import get_kl
+from adversarial_training import get_main_obj,get_normalized_vector,get_perturbation
+from virtual_adversarial_training import get_kl
 
 def virtual_adversarial_training_finite_diff(x,t,forward_func,
                          main_obj_type,

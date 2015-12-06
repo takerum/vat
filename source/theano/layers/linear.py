@@ -2,7 +2,7 @@ import theano
 import theano.tensor as T
 import numpy
 
-from source.theano import Layer
+from layer import Layer
 
 class Linear(Layer):
 

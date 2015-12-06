@@ -2,13 +2,38 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="58fcafa2-0f3b-4bbe-8384-6caef7bc6c2b" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/README.md" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dataset/download.sh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/source/load_data.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/source/mlp.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/source/mlp_ss.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/source/test.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/source/train.py" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/source/theano/layers/layer.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/source/theano/optimizers/optimizer.py" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/source/theano/model.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/source/theano/utils/__init__.py" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/source/theano/layer.py" afterPath="$PROJECT_DIR$/source/theano/layers/layer.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/source/theano/optimizer.py" afterPath="$PROJECT_DIR$/source/theano/optimizers/optimizer.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/source/theano/utils/load_data.py" afterPath="$PROJECT_DIR$/load_data.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/theano/__init__.py" afterPath="$PROJECT_DIR$/source/theano/__init__.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/theano/costs/__init__.py" afterPath="$PROJECT_DIR$/source/theano/costs/__init__.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/theano/layers/__init__.py" afterPath="$PROJECT_DIR$/source/theano/layers/__init__.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/theano/models/__init__.py" afterPath="$PROJECT_DIR$/source/theano/models/__init__.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/theano/optimizers/adagrad.py" afterPath="$PROJECT_DIR$/source/theano/optimizers/adagrad.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/theano/optimizers/adam.py" afterPath="$PROJECT_DIR$/source/theano/optimizers/adam.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/theano/costs/adversarial_training.py" afterPath="$PROJECT_DIR$/source/theano/costs/adversarial_training.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/theano/layers/batch_normalization.py" afterPath="$PROJECT_DIR$/source/theano/layers/batch_normalization.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/theano/layers/conv_2d.py" afterPath="$PROJECT_DIR$/source/theano/layers/conv_2d.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/theano/layers/dropout.py" afterPath="$PROJECT_DIR$/source/theano/layers/dropout.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/theano/layers/gaussian_noise.py" afterPath="$PROJECT_DIR$/source/theano/layers/gaussian_noise.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/theano/layers/global_average.py" afterPath="$PROJECT_DIR$/source/theano/layers/global_average.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/theano/layers/linear.py" afterPath="$PROJECT_DIR$/source/theano/layers/linear.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/theano/layers/lrelu.py" afterPath="$PROJECT_DIR$/source/theano/layers/lrelu.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/theano/layers/mat_to_tensor4.py" afterPath="$PROJECT_DIR$/source/theano/layers/mat_to_tensor4.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/theano/layers/max_pool_2d.py" afterPath="$PROJECT_DIR$/source/theano/layers/max_pool_2d.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/theano/optimizers/momentum_sgd.py" afterPath="$PROJECT_DIR$/source/theano/optimizers/momentum_sgd.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/theano/layers/relu.py" afterPath="$PROJECT_DIR$/source/theano/layers/relu.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/theano/optimizers/sgd.py" afterPath="$PROJECT_DIR$/source/theano/optimizers/sgd.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/theano/layers/sigmoid.py" afterPath="$PROJECT_DIR$/source/theano/layers/sigmoid.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/theano/layers/softmax.py" afterPath="$PROJECT_DIR$/source/theano/layers/softmax.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/theano/layers/tensor_to_mat.py" afterPath="$PROJECT_DIR$/source/theano/layers/tensor_to_mat.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/theano/costs/virtual_adversarial_training.py" afterPath="$PROJECT_DIR$/source/theano/costs/virtual_adversarial_training.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/theano/costs/virtual_adversarial_training_finite_diff.py" afterPath="$PROJECT_DIR$/source/theano/costs/virtual_adversarial_training_finite_diff.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="vat.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -29,104 +54,104 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="momentum_sgd.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/source/optimizers/momentum_sgd.py">
+      <file leaf-file-name="load_data.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/load_data.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="0" column="11" selection-start-line="0" selection-start-column="11" selection-end-line="0" selection-end-column="11" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="sgd.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/source/optimizers/sgd.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="0" column="11" selection-start-line="0" selection-start-column="11" selection-end-line="0" selection-end-column="11" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/source/models/__init__.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="0" column="12" selection-start-line="0" selection-start-column="12" selection-end-line="0" selection-end-column="12" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="fnn.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/source/models/fnn.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <caret line="13" column="32" selection-start-line="13" selection-start-column="32" selection-end-line="13" selection-end-column="32" />
               <folding>
-                <element signature="e#0#13#0" expanded="true" />
+                <element signature="e#0#12#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/source/layers/__init__.py">
+        <entry file="file://$PROJECT_DIR$/source/theano/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="10" column="12" selection-start-line="10" selection-start-column="12" selection-end-line="10" selection-end-column="12" />
-              <folding />
+              <caret line="8" column="23" selection-start-line="8" selection-start-column="23" selection-end-line="8" selection-end-column="23" />
+              <folding>
+                <element signature="e#50#63#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/source/costs/__init__.py">
+        <entry file="file://$PROJECT_DIR$/source/theano/costs/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="7" column="12" selection-start-line="7" selection-start-column="12" selection-end-line="7" selection-end-column="12" />
+              <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="adversarial_training.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/source/costs/adversarial_training.py">
+        <entry file="file://$PROJECT_DIR$/source/theano/costs/adversarial_training.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="4" column="19" selection-start-line="4" selection-start-column="19" selection-end-line="4" selection-end-column="19" />
+              <caret line="5" column="5" selection-start-line="5" selection-start-column="5" selection-end-line="5" selection-end-column="5" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="relu.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/source/layers/relu.py">
+      <file leaf-file-name="cross_entropy_loss.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/source/theano/costs/cross_entropy_loss.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="error.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/source/theano/costs/error.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="virtual_adversarial_training.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/source/theano/costs/virtual_adversarial_training.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="5" column="5" selection-start-line="5" selection-start-column="5" selection-end-line="5" selection-end-column="5" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="virtual_adversarial_training_finite_diff.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/source/theano/costs/virtual_adversarial_training_finite_diff.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="6" column="12" selection-start-line="6" selection-start-column="12" selection-end-line="6" selection-end-column="12" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="weight_decay.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/source/theano/costs/weight_decay.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding>
-                <element signature="e#0#25#0" expanded="true" />
+                <element signature="e#0#12#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="softmax.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/source/layers/softmax.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#25#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="cross_entropy_loss.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/source/costs/cross_entropy_loss.py">
+      <file leaf-file-name="quadratic_loss.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/source/theano/costs/quadratic_loss.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -158,6 +183,35 @@
         <option value="$PROJECT_DIR$/source/layers/__init__.py" />
         <option value="$PROJECT_DIR$/source/costs/__init__.py" />
         <option value="$PROJECT_DIR$/source/costs/adversarial_training.py" />
+        <option value="$PROJECT_DIR$/mnist/fnn_mnist.py" />
+        <option value="$PROJECT_DIR$/source/theano/utils/load_data.py" />
+        <option value="$PROJECT_DIR$/source/theano/utils/__init__.py" />
+        <option value="$PROJECT_DIR$/source/theano/models/__init__.py" />
+        <option value="$PROJECT_DIR$/source/theano/layers/__init__.py" />
+        <option value="$PROJECT_DIR$/source/theano/layers/layer.py" />
+        <option value="$PROJECT_DIR$/source/theano/layers/batch_normalization.py" />
+        <option value="$PROJECT_DIR$/source/theano/layers/conv_2d.py" />
+        <option value="$PROJECT_DIR$/source/theano/layers/dropout.py" />
+        <option value="$PROJECT_DIR$/source/theano/layers/gaussian_noise.py" />
+        <option value="$PROJECT_DIR$/source/theano/layers/global_average.py" />
+        <option value="$PROJECT_DIR$/source/theano/layers/linear.py" />
+        <option value="$PROJECT_DIR$/source/theano/layers/lrelu.py" />
+        <option value="$PROJECT_DIR$/source/theano/layers/mat_to_tensor4.py" />
+        <option value="$PROJECT_DIR$/source/theano/layers/max_pool_2d.py" />
+        <option value="$PROJECT_DIR$/source/theano/layers/relu.py" />
+        <option value="$PROJECT_DIR$/source/theano/layers/softmax.py" />
+        <option value="$PROJECT_DIR$/source/theano/layers/sigmoid.py" />
+        <option value="$PROJECT_DIR$/source/theano/layers/tensor_to_mat.py" />
+        <option value="$PROJECT_DIR$/source/theano/__init__.py" />
+        <option value="$PROJECT_DIR$/source/theano/optimizers/momentum_sgd.py" />
+        <option value="$PROJECT_DIR$/source/theano/optimizers/adam.py" />
+        <option value="$PROJECT_DIR$/source/theano/optimizers/adagrad.py" />
+        <option value="$PROJECT_DIR$/source/theano/optimizers/sgd.py" />
+        <option value="$PROJECT_DIR$/load_data.py" />
+        <option value="$PROJECT_DIR$/source/theano/costs/__init__.py" />
+        <option value="$PROJECT_DIR$/source/theano/costs/adversarial_training.py" />
+        <option value="$PROJECT_DIR$/source/theano/costs/virtual_adversarial_training.py" />
+        <option value="$PROJECT_DIR$/source/theano/costs/virtual_adversarial_training_finite_diff.py" />
       </list>
     </option>
   </component>
@@ -165,7 +219,7 @@
     <order />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="y" value="23" />
+    <option name="y" value="75" />
     <option name="width" value="1366" />
     <option name="height" value="741" />
   </component>
@@ -236,47 +290,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="source" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="models" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="vat" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="vat_github" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="source" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="layers" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="vat" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="vat_github" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="source" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="costs" />
+              <option name="myItemId" value="datasets" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -289,7 +303,14 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/source" />
+      <recent name="$PROJECT_DIR$/source/theano/optimizers" />
+      <recent name="$PROJECT_DIR$/source/theano/models" />
+      <recent name="$PROJECT_DIR$/source/theano/layers" />
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/source/theano/utils" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/source/theano/models" />
     </key>
   </component>
   <component name="RunManager">
@@ -430,21 +451,21 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1366" height="741" extended-state="6" />
-    <editor active="true" />
+    <frame x="0" y="75" width="1366" height="741" extended-state="6" />
+    <editor active="false" />
     <layout>
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32886904" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24963397" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24963397" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32941177" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -469,55 +490,37 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/source/__init__.py">
+    <entry file="file://$PROJECT_DIR$/fnn_syn.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="5" column="11" selection-start-line="5" selection-start-column="11" selection-end-line="5" selection-end-column="11" />
-          <folding />
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#36#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/optimizers/__init__.py">
+    <entry file="file://$PROJECT_DIR$/fnn_mnist_sup.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="3" column="12" selection-start-line="3" selection-start-column="12" selection-end-line="3" selection-end-column="12" />
-          <folding />
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#36#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/optimizers/adagrad.py">
+    <entry file="file://$PROJECT_DIR$/fnn_mnist_semisup.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="11" selection-start-line="0" selection-start-column="11" selection-end-line="0" selection-end-column="11" />
-          <folding />
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#36#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/optimizers/adam.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="11" selection-start-line="0" selection-start-column="11" selection-end-line="0" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source/optimizers/momentum_sgd.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="11" selection-start-line="0" selection-start-column="11" selection-end-line="0" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source/optimizers/sgd.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="11" selection-start-line="0" selection-start-column="11" selection-end-line="0" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source/costs/cross_entropy_loss.py">
+    <entry file="file://$PROJECT_DIR$/source/theano/models/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -525,15 +528,143 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/models/__init__.py">
+    <entry file="file://$PROJECT_DIR$/source/theano/layers/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="12" selection-start-line="0" selection-start-column="12" selection-end-line="0" selection-end-column="12" />
+          <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/models/fnn.py">
+    <entry file="file://$PROJECT_DIR$/source/theano/layers/batch_normalization.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/theano/layers/conv_2d.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="5" column="23" selection-start-line="5" selection-start-column="23" selection-end-line="5" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/theano/layers/dropout.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="2" column="23" selection-start-line="2" selection-start-column="23" selection-end-line="2" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/theano/layers/gaussian_noise.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="2" column="23" selection-start-line="2" selection-start-column="23" selection-end-line="2" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/theano/layers/global_average.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="1" column="23" selection-start-line="1" selection-start-column="23" selection-end-line="1" selection-end-column="23" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/theano/layers/layer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/theano/layers/linear.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="4" column="23" selection-start-line="4" selection-start-column="23" selection-end-line="4" selection-end-column="23" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/theano/layers/lrelu.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="3" column="23" selection-start-line="3" selection-start-column="23" selection-end-line="3" selection-end-column="23" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/theano/layers/mat_to_tensor4.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/theano/layers/max_pool_2d.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="3" column="23" selection-start-line="3" selection-start-column="23" selection-end-line="3" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/theano/layers/relu.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="1" column="23" selection-start-line="1" selection-start-column="23" selection-end-line="1" selection-end-column="23" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/theano/layers/sigmoid.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="1" column="23" selection-start-line="1" selection-start-column="23" selection-end-line="1" selection-end-column="23" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/theano/layers/tensor_to_mat.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="1" column="23" selection-start-line="1" selection-start-column="23" selection-end-line="1" selection-end-column="23" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/theano/layers/softmax.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="1" column="23" selection-start-line="1" selection-start-column="23" selection-end-line="1" selection-end-column="23" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/theano/optimizers/optimizer.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -543,47 +674,141 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/layers/__init__.py">
+    <entry file="file://$PROJECT_DIR$/source/theano/optimizers/momentum_sgd.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="10" column="12" selection-start-line="10" selection-start-column="12" selection-end-line="10" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source/costs/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="7" column="12" selection-start-line="7" selection-start-column="12" selection-end-line="7" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source/costs/adversarial_training.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="4" column="19" selection-start-line="4" selection-start-column="19" selection-end-line="4" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source/layers/relu.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="31" />
           <folding>
-            <element signature="e#0#25#0" expanded="true" />
+            <element signature="e#0#31#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/layers/softmax.py">
+    <entry file="file://$PROJECT_DIR$/source/theano/optimizers/adam.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="31" selection-start-line="0" selection-start-column="31" selection-end-line="0" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/theano/optimizers/adagrad.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="31" selection-start-line="0" selection-start-column="31" selection-end-line="0" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/theano/optimizers/sgd.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="31" selection-start-line="0" selection-start-column="31" selection-end-line="0" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/theano/models/fnn.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#25#0" expanded="true" />
+            <element signature="e#0#13#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fnn_syn_dropout.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="30" selection-start-line="0" selection-start-column="30" selection-end-line="0" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/load_data.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="13" column="32" selection-start-line="13" selection-start-column="32" selection-end-line="13" selection-end-column="32" />
+          <folding>
+            <element signature="e#0#12#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/theano/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="8" column="23" selection-start-line="8" selection-start-column="23" selection-end-line="8" selection-end-column="23" />
+          <folding>
+            <element signature="e#50#63#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/theano/costs/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/theano/costs/adversarial_training.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="5" column="5" selection-start-line="5" selection-start-column="5" selection-end-line="5" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/theano/costs/virtual_adversarial_training.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="5" column="5" selection-start-line="5" selection-start-column="5" selection-end-line="5" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/theano/costs/virtual_adversarial_training_finite_diff.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="6" column="12" selection-start-line="6" selection-start-column="12" selection-end-line="6" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/theano/costs/weight_decay.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#12#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/theano/costs/quadratic_loss.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/theano/costs/error.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/theano/costs/cross_entropy_loss.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>

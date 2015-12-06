@@ -1,4 +1,3 @@
-
 class Layer(object):
 
     def __call__(self, input):

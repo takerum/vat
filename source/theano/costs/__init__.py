@@ -1,11 +1,11 @@
-from source.theano.costs import cross_entropy_loss
-from source.theano.costs import quadratic_loss
-from source.theano.costs import weight_decay
-from source.theano.costs import adversarial_training
-from source.theano.costs import virtual_adversarial_training as vat
-from source.theano.costs import virtual_adversarial_training_finite_diff as vat_finite_diff
+import cross_entropy_loss
+import quadratic_loss
+import weight_decay
+import adversarial_training
+import virtual_adversarial_training as vat
+import virtual_adversarial_training_finite_diff as vat_finite_diff
 
-from source.theano.costs import error
+import error
 
 cross_entropy_loss = cross_entropy_loss.cross_entropy_loss
 quadratic_loss = quadratic_loss.quadratic_loss

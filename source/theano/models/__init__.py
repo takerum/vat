@@ -1,3 +1,2 @@
-from source.theano.models import fnn
-
+import fnn
 FNN = fnn.FNN

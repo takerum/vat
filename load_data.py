@@ -2,13 +2,12 @@ import numpy
 import cPickle
 import os
 import theano
-import gzip
 
 
-dataset_dir_path = os.environ['VAT_HOME'] + 'datasets/'
+
 
 def load_mnist_dataset():
-	return cPickle.load(open(dataset_dir_path + 'mnist.pkl','rb'))
+	return cPickle.load(open('dataset/mnist.pkl','rb'))
 
 def _shared_dataset(data_xy):
     data_x, data_y = data_xy

@@ -3,7 +3,7 @@ import theano.tensor as T
 import numpy
 import collections
 from theano.tensor.nnet import conv
-from source.theano import Layer
+from layer import Layer
 
 from pylearn2.sandbox.cuda_convnet.filter_acts import FilterActs
 from theano.sandbox.cuda.basic_ops import gpu_contiguous

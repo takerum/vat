@@ -1,7 +1,7 @@
 import theano
 from theano.tensor.signal import downsample
 
-from source.theano import Layer
+from layer import Layer
 import collections
 from pylearn2.sandbox.cuda_convnet.pool import MaxPool
 from theano.sandbox.cuda.basic_ops import gpu_contiguous
