@@ -1,7 +1,7 @@
 
 """
 Usage:
-  train.py [--dataset_name=<name>] [--save_name=<name>] \
+  train.py [--dataset_filename=<name>] [--save_filename=<name>] \
   [--num_epochs=<n_epoch>] [--initial_learning_rate=<lr>] [--learning_rate_decay=<lr_decay>] [--momentum_ratio=<ratio>]\
   [--cost_type=<ctype>] \
   [--dropout_rate=<rate>] [--lamb=<lamb>][--epsilon=<ep>][--norm_constraint=<nc>][--num_power_iter=<npi>] \
@@ -10,8 +10,8 @@ Usage:
 
 Options:
   -h --help                                 Show this screen.
-  --dataset_name=<name>                     [default: syndata_1]
-  --save_name=<name>                        [default: result]
+  --dataset_filename=<name>                 [default: syndata_1.pkl]
+  --save_filename=<name>                    [default: trained_model.pkl]
   --num_epochs=<n_ep>                       num_epochs [default: 1000].
   --initial_learning_rate=<lr>              initial_learning_rate [default: 1.0].
   --learning_rate_decay=<lr_decay>          learning_rate_decay [default: 0.995].
@@ -181,10 +181,4 @@ def train(args):
 
 if __name__=='__main__':
     args = docopt(__doc__)
-    dataset_filenames = [args['--dataset_name'] + '_' + str(i) + '.pkl' for i in xrange(1,51,1)]
-    save_filenames = [args['--save_name'] + args['--dataset_name'] + '_' + str(i) + '.pkl' for i in xrange(1,51,1)]
-
-    for df,sf in zip(dataset_filenames,save_filenames):
-        args['--dataset_filename'] = df
-        args['--save_filename'] = sf
-        train(args)
+    train(args)
