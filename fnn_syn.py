@@ -1,5 +1,6 @@
-from source.theano.models import FNN
-from source.theano import layers as L
+from source.models import FNN
+from source import layers as L
+
 class FNN_syn(FNN):
 
     def __init__(self):
