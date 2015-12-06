@@ -30,10 +30,9 @@ class Linear(Layer):
     def forward(self,input):
         print "Layer/Linear"
         input = self._as_mat(input)
-        output = T.dot(input, self.W) + self.b
+        output = T.dot(input, self.W)
         if(self.use_bias == True):
             output += self.b
-
         return output
 
     def _as_mat(self,x):
