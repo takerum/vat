@@ -7,7 +7,10 @@ import theano
 
 
 def load_mnist_dataset():
-	return cPickle.load(open('dataset/mnist.pkl','rb'))
+    dataset = cPickle.load(open('dataset/mnist.pkl','rb'))
+    train_set_x = numpy.concatenate((dataset[0][0],dataset[1][0]),axis=0)
+    train_set_y = numpy.concatenate((dataset[0][1],dataset[1][1]),axis=0)
+    return ((train_set_x,train_set_y),(dataset[2][0],dataset[2][1]))
 
 def _shared_dataset(data_xy):
     data_x, data_y = data_xy
