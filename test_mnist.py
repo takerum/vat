@@ -1,6 +1,18 @@
+"""
+Usage:
+  test_mnist.py [--load_filename=<name>] \
+  test_mnist.py -h | --help
+
+Options:
+  -h --help                                 Show this screen.
+  --load_filename=<name>                    [default: trained_model]
+"""
+
+from docopt import docopt
+
+
 import numpy
 import cPickle
-import sys
 
 from load_data import load_mnist_full
 import theano
@@ -9,17 +21,15 @@ import theano.tensor as T
 from source.costs import error
 
 if __name__ == '__main__':
-    if(len(sys.argv)>1):
-        load_filename = sys.argv[1]
-    else:
-        load_filename = 'trained_model.pkl'
+    args = docopt(__doc__)
+
 
     m_batch_size = 100
     dataset = load_mnist_full()
     test_set_x,test_set_y = dataset[1]
     n_test_batches = numpy.ceil((test_set_x.get_value(borrow=True).shape[0]) / numpy.float(m_batch_size))
 
-    trained_model = cPickle.load(open("trained_model/" + load_filename,'rb'))
+    trained_model = cPickle.load(open("trained_model/" + args['--load_filename'],'rb'))
 
     index = T.iscalar()
     x = T.matrix()

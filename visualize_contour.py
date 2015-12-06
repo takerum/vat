@@ -1,10 +1,24 @@
+"""
+Usage:
+  visualize_contour.py [--load_filename=<name>] [--save_filename=<name>] [--dataset_i=<index>]\
+  visualize_contour.py -h | --help
+
+Options:
+  -h --help                                 Show this screen.
+  --load_filename=<name>                    [default: trained_model]
+  --save_filename=<name>                    [default: countour]
+  --dataset_i=<index>                       [default: 1]
+"""
+
+from docopt import docopt
+
 import theano
-import theano.tensor as T
 import numpy
 from numpy import linalg
 from matplotlib.patches import  Circle, Arc
 import matplotlib.pyplot as plt
-%matplotlib inline
+
+import cPickle
 
 from theano import tensor as T
 from source.costs import LDS_finite_diff
@@ -19,7 +33,7 @@ def make_sure_path_exists(path):
         if exception.errno != errno.EEXIST:
             raise
 
-def visualize_contour_for_synthetic_dataset(model,d_i,x_data,y_data,basis,with_LDS=False,epsilon=0.5,num_power_iter=5,save_name='prob_cont'):
+def visualize_contour_for_synthetic_dataset(model,d_i,x_data,y_data,basis,with_LDS=False,epsilon=0.5,num_power_iter=5,save_filename='prob_cont'):
     
     linewidth = 10
     
@@ -50,8 +64,7 @@ def visualize_contour_for_synthetic_dataset(model,d_i,x_data,y_data,basis,with_L
     fontsize = 20
     rc = 'r'
     bc ='b'
-    
-    orgfig = plt.figure(figsize=numpy.asarray([9.6,8])*0.5)
+
     if(d_i == 1):
         rescale = 1.0#/numpy.sqrt(500)
         arc1 =Arc(xy=[0.5*rescale, -0.25*rescale], width=2.0*rescale, height=2.0*rescale,angle=0, theta1=270,theta2=180,linewidth=linewidth,alpha=0.15,color=rc)
@@ -82,11 +95,7 @@ def visualize_contour_for_synthetic_dataset(model,d_i,x_data,y_data,basis,with_L
     plt.ylim([-2.*rescale,2.*rescale])
     plt.xticks([-2.0,-1.0,0,1,2.0],fontsize=fontsize)
     plt.yticks([-2.0,-1.0,0,1,2.0],fontsize=fontsize)
-    
 
-    #plt.axes().get_xaxis().set_visible(False)
-    #plt.axes().get_yaxis().set_visible(False)
-    
     plt.scatter(train_x_org[train_x_1_ind,0]*rescale,train_x_org[train_x_1_ind,1]*rescale,s= 100,marker='o',c = rc,label='$y=1$')
     plt.scatter(train_x_org[train_x_0_ind,0]*rescale,train_x_org[train_x_0_ind,1]*rescale,s =100,marker='^',c = bc,label='$y=0$')
     
@@ -105,7 +114,18 @@ def visualize_contour_for_synthetic_dataset(model,d_i,x_data,y_data,basis,with_L
         print ave_LDS
         plt.title('Average $\widetilde{\\rm LDS}=%.3f$' %round(ave_LDS,3),fontsize=fontsize)
     make_sure_path_exists("./figure")
-    plt.savefig('figure/' + save_name+'.pdf',transparent=True)
+    plt.savefig('figure/' + save_filename,transparent=True)
 
    
 if __name__ == '__main__':
+    args = docopt(__doc__)
+    dataset_i = int(args['--dataset_i'])
+    dataset = cPickle.load(open('dataset/syndata_' + str(dataset_i) + '.pkl'))
+    x_train =numpy.asarray(dataset[0][0][0],dtype=theano.config.floatX)
+    t_train =  numpy.asarray(dataset[0][0][1],dtype='int32')
+    x_valid =  numpy.asarray(dataset[0][1][0],dtype=theano.config.floatX)
+    t_valid =  numpy.asarray(dataset[0][1][1],dtype='int32')
+
+    model = cPickle.load(open('trained_model/' + args['--load_filename'] + '.pkl'))[0]
+
+    visualize_contour_for_synthetic_dataset(model,dataset_i,x_train,t_train,dataset[1],with_LDS=True,save_filename=args['--save_filename'])
