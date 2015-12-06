@@ -1,7 +1,7 @@
-from source.theano.optimizers import sgd
-from source.theano.optimizers import momentum_sgd
-from source.theano.optimizers import adagrad
-from source.theano.optimizers import adam
+import sgd
+import momentum_sgd
+import adagrad
+import adam
 
 SGD = sgd.SGD
 MomentumSGD = momentum_sgd.MomentumSGD
