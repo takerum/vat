@@ -34,6 +34,7 @@ Options:
 
 from docopt import docopt
 
+
 from source.theano import optimizers
 from source.theano import costs
 import numpy
@@ -43,7 +44,7 @@ from theano.tensor.shared_randomstreams import RandomStreams
 import cPickle
 
 from source.theano import utils
-from fnn_mnist import FNN_MNIST
+from fnn_mnist_sup import FNN_MNIST
 import os
 import errno
 

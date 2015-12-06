@@ -4,29 +4,11 @@ import os
 import theano
 import gzip
 
-def load_original_mnist_dataset():
-    #############
-    # LOAD DATA #
-    #############
 
-    # Download the MNIST dataset if it is not present
-    filename = '/home/miyato-t/vat/datasets/mnist.pkl.gz'
-    data_dir, data_file = os.path.split(filename)
-    if (not os.path.isfile(filename)) and data_file == 'mnist.pkl.gz':
-        import urllib
-        origin = 'http://www.iro.umontreal.ca/~lisa/deep/data/mnist/mnist.pkl.gz'
-        print 'Downloading data from %s' % origin
-        urllib.urlretrieve(origin, filename)
-    print '... loading data'
-
-    # Load the dataset
-    f = gzip.open(filename, 'rb')
-    train_set, valid_set, test_set = cPickle.load(f)
-    f.close()
-    return (train_set,valid_set,test_set)
+dataset_dir_path = os.environ['VAT_HOME'] + 'datasets/'
 
 def load_mnist_dataset():
-    return cPickle.load(open('/home/miyato-t/vat/datasets/mnist.pkl','rb'))
+	return cPickle.load(open(dataset_dir_path + 'mnist.pkl','rb'))
 
 def _shared_dataset(data_xy):
     data_x, data_y = data_xy

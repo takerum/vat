@@ -45,7 +45,7 @@ from theano.tensor.shared_randomstreams import RandomStreams
 import cPickle
 
 from source.theano import utils
-from fnn_mnist_2 import FNN_MNIST
+from fnn_mnist_semisup import FNN_MNIST
 import os
 import errno
 
