@@ -4,7 +4,9 @@ Python codes for reproducing the results in the paper "Distributional Smoothing 
 ## Required libraries
 python 2.7, numpy 1.9, theano 0.7.0, docopt 0.6.2
 
-## Model's contours on synthetic datasets with different regularization methods (Fig.3,4 in our paper)
+
+## Examples for synthetic dataset
+### Model's contours on synthetic datasets with different regularization methods (Fig.3,4 in our paper)
 ```
 ./vis_model_contours.sh
 ```
