@@ -12,7 +12,7 @@ The coutour images will be saved in ` ./figure `.
 
 ## Examples for MNIST dataset
 
-### download mnist.pkl
+#### Download mnist.pkl
 ```
 cd dataset
 ./download_mnist.sh
