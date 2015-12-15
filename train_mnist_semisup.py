@@ -1,31 +1,31 @@
 
 """
 Usage:
-  train.py [--save_filename=<name>] \
-  [--num_epochs=<n_epoch>] [--batch_size==<N>] [--ul_batch_size=<N>] [--num_batch_it=<N>] \
-  [--initial_learning_rate=<lr>] [--learning_rate_decay=<lr_decay>] \
+  train.py [--save_filename=<str>] \
+  [--num_epochs=<N>] [--batch_size==<N>] [--ul_batch_size=<N>] [--num_batch_it=<N>] \
+  [--initial_learning_rate=<float>] [--learning_rate_decay=<float>] \
   [--layer_sizes=<str>] \
-  [--cost_type=<ctype>] \
-  [--dropout_rate=<rate>] [--lamb=<lamb>] [--epsilon=<ep>] [--norm_constraint=<nc>] [--num_power_iter=<npi>] \
+  [--cost_type=<str>] \
+  [--dropout_rate=<float>] [--lamb=<float>] [--epsilon=<float>] [--norm_constraint=<str>] [--num_power_iter=<N>] \
   [--num_labeled_samples=<N>] [--num_validation_samples=<N>] \
   [--seed=<N>]
   train.py -h | --help
 
 Options:
   -h --help                                 Show this screen.
-  --save_filename=<name>                    [default: trained_model]
-  --num_epochs=<n_ep>                       num_epochs [default: 100].
+  --save_filename=<str>                     [default: trained_model]
+  --num_epochs=<N>                          num_epochs [default: 100].
   --batch_size=<N>                          batch_size [default: 100].
   --ul_batch_size=<N>                       ul_batch_size [default: 250].
   --num_batch_it=<N>                        num_batch_iteration [default: 500].
-  --initial_learning_rate=<lr>              initial_learning_rate [default: 0.002].
-  --learning_rate_decay=<lr_decay>          learning_rate_decay [default: 0.9].
+  --initial_learning_rate=<float>           initial_learning_rate [default: 0.002].
+  --learning_rate_decay=<float>             learning_rate_decay [default: 0.9].
   --layer_sizes=<str>                       layer_sizes [default: 784-1200-1200-10]
-  --cost_type=<ctype>                       cost_type [default: MLE].
-  --lamb=<lamb>                             [default: 1.0].
-  --epsilon=<ep>                            [default: 2.0].
-  --norm_constraint=<nc>                    [default: L2].
-  --num_power_iter=<npi>                    [default: 1].
+  --cost_type=<str>                         cost_type [default: MLE].
+  --lamb=<float>                            [default: 1.0].
+  --epsilon=<float>                         [default: 2.0].
+  --norm_constraint=<str>                   [default: L2].
+  --num_power_iter=<N>                      [default: 1].
   --num_labeled_samples=<N>                 [default: 1000].
   --num_validation_samples=<N>              [default: 1000].
   --seed=<N>                                [default: 1].

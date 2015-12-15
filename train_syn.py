@@ -1,29 +1,29 @@
 
 """
 Usage:
-  train.py [--dataset_filename=<name>] [--save_filename=<name>] \
-  [--num_epochs=<n_epoch>] [--initial_learning_rate=<lr>] [--learning_rate_decay=<lr_decay>] [--momentum_ratio=<ratio>]\
-  [--cost_type=<ctype>] \
-  [--dropout_rate=<rate>] [--lamb=<lamb>][--epsilon=<ep>][--norm_constraint=<nc>][--num_power_iter=<npi>] \
-  [--monitoring_LDS] [--num_power_iter_for_monitoring_LDS=<npi>]
+  train.py [--dataset_filename=<str>] [--save_filename=<str>] \
+  [--num_epochs=<N>] [--initial_learning_rate=<float>] [--learning_rate_decay=<float>] [--momentum_ratio=<float>]\
+  [--cost_type=<str>] \
+  [--dropout_rate=<float>] [--lamb=<float>][--epsilon=<float>][--norm_constraint=<str>][--num_power_iter=<N>] \
+  [--monitoring_LDS] [--num_power_iter_for_monitoring_LDS=<N>]
   train.py -h | --help
 
 Options:
   -h --help                                 Show this screen.
-  --dataset_filename=<name>                 [default: syndata_1.pkl]
-  --save_filename=<name>                    [default: trained_model.pkl]
-  --num_epochs=<n_ep>                       num_epochs [default: 1000].
-  --initial_learning_rate=<lr>              initial_learning_rate [default: 1.0].
-  --learning_rate_decay=<lr_decay>          learning_rate_decay [default: 0.995].
-  --momentum_ratio=<ratio>                  [default: 0.9].
-  --cost_type=<ctype>                       cost_type [default: MLE].
-  --dropout_rate=<rate>                     [default: 0.0].
-  --lamb=<lamb>                             [default: 1.0].
-  --epsilon=<ep>                            [default: 0.5].
-  --norm_constraint=<nc>                    [default: L2].
-  --num_power_iter=<npi>                    [default: 1].
+  --dataset_filename=<str>                  [default: syndata_1.pkl]
+  --save_filename=<str>                     [default: trained_model.pkl]
+  --num_epochs=<N>                          num_epochs [default: 1000].
+  --initial_learning_rate=<float>           initial_learning_rate [default: 1.0].
+  --learning_rate_decay=<float>             learning_rate_decay [default: 0.995].
+  --momentum_ratio=<float>                  [default: 0.9].
+  --cost_type=<str>                         cost_type [default: MLE].
+  --dropout_rate=<float>                    [default: 0.0].
+  --lamb=<float>                            [default: 1.0].
+  --epsilon=<float>                         [default: 0.5].
+  --norm_constraint=<str>                   [default: L2].
+  --num_power_iter=<N>                      [default: 1].
   --monitoring_LDS
-  --num_power_iter_for_monitoring_LDS=<npi>    [default: 5].
+  --num_power_iter_for_monitoring_LDS=<N>   [default: 5].
 """
 
 from docopt import docopt
