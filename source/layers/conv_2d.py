@@ -33,7 +33,7 @@ class Conv_2D(Layer):
         self.border_mode = border_mode
         self.stride = _pair(stride)
         self.size = numpy.asarray([out_maps,in_maps,self.filter_size[0],self.filter_size[1]])
-        self.gpu = theano.config.device=='gpu'
+        self.gpu = 'gpu' in theano.config.device
         self.use_pylearn = use_pylearn
 
         if(initial_W != None):
