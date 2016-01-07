@@ -2,5 +2,3 @@
 __author__ = 'TakeruMiyato'
 import source
 import models
-source = source
-models = models
