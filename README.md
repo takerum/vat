@@ -1,5 +1,5 @@
 # Virtual Adversarial training (VAT) implemented with Theano
-Python codes for reproducing the results in the paper "Distributional Smoothing with Virtual Adversarial Training" http://arxiv.org/abs/1507.00677v6 
+Python codes for reproducing the results in the paper "Distributional Smoothing with Virtual Adversarial Training" http://arxiv.org/abs/1507.00677v7
 
 ## Required libraries
 python 2.7, numpy 1.9, theano 0.7.0, docopt 0.6.2
