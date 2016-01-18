@@ -2,9 +2,9 @@ import theano
 import theano.tensor as T
 import numpy
 
-from layer import Layer
+from layer import LearnableLayer
 
-class BatchNormalization(Layer):
+class BatchNormalization(LearnableLayer):
 
     def __init__(self,size,moving_avg_ratio=0.9,initial_gamma=None,initial_beta=None):
 

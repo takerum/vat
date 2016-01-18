@@ -5,3 +5,9 @@ class Layer(object):
 
     def forward(self,input):
         raise NotImplementedError()
+
+
+class LearnableLayer(Layer):
+
+    def __init__(self):
+        self.params = None

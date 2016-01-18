@@ -2,9 +2,9 @@ import theano
 import theano.tensor as T
 import numpy
 
-from layer import Layer
+from layer import LearnableLayer
 
-class Linear(Layer):
+class Linear(LearnableLayer):
 
     def __init__(self,size,use_bias=True,initial_W=None,initial_b=None):
         self.use_bias = use_bias

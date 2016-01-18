@@ -3,7 +3,7 @@ import theano.tensor as T
 import numpy
 import collections
 from theano.tensor.nnet import conv
-from layer import Layer
+from layer import LearnableLayer
 
 from pylearn2.sandbox.cuda_convnet.filter_acts import FilterActs
 from theano.sandbox.cuda.basic_ops import gpu_contiguous
@@ -13,7 +13,7 @@ def _pair(x):
         return x
     return (x, x)
 
-class Conv_2D(Layer):
+class Conv_2D(LearnableLayer):
 
     def __init__(self,in_maps,out_maps,filter_size,border_mode='valid',stride=1,use_bias=True,initial_W=None,initial_b=None,use_pylearn=True):
         """
