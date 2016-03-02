@@ -41,6 +41,7 @@ import cPickle
 from source import optimizers
 from source import costs
 from models.fnn_mnist_semisup import FNN_MNIST
+from collections import OrderedDict
 import load_data
 
 
@@ -139,10 +140,19 @@ def train(args):
 
     f_lr_decay = theano.function(inputs=[],outputs=optimizer.alpha,
                                  updates={optimizer.alpha:theano.shared(numpy.array(args['--learning_rate_decay']).astype(theano.config.floatX))*optimizer.alpha})
+
+    # Shuffle training set
     randix = RandomStreams(seed=numpy.random.randint(1234)).permutation(n=x_train.shape[0])
-    f_permute_train_set = theano.function(inputs=[],outputs=x_train,updates={x_train:x_train[randix],t_train:t_train[randix]})
+    update_permutation = OrderedDict()
+    update_permutation[x_train] = x_train[randix]
+    update_permutation[t_train] = t_train[randix]
+    f_permute_train_set = theano.function(inputs=[],outputs=x_train,updates=update_permutation)
+
+    # Shuffle unlabeled training set
     ul_randix = RandomStreams(seed=numpy.random.randint(1234)).permutation(n=ul_x_train.shape[0])
-    f_permute_ul_train_set = theano.function(inputs=[],outputs=ul_x_train,updates={ul_x_train:ul_x_train[ul_randix]})
+    update_ul_permutation = OrderedDict()
+    update_ul_permutation[ul_x_train] = ul_x_train[ul_randix]
+    f_permute_ul_train_set = theano.function(inputs=[],outputs=ul_x_train,updates=update_ul_permutation)
 
     statuses = {}
     statuses['nll_train'] = []

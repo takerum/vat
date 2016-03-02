@@ -42,6 +42,7 @@ import cPickle
 from source import optimizers
 from source import costs
 from models.fnn_mnist_sup import FNN_MNIST
+from collections import OrderedDict
 import load_data
 
 
@@ -135,7 +136,10 @@ def train(args):
     f_lr_decay = theano.function(inputs=[],outputs=optimizer.alpha,
                                  updates={optimizer.alpha:theano.shared(numpy.array(args['--learning_rate_decay']).astype(theano.config.floatX))*optimizer.alpha})
     randix = RandomStreams(seed=numpy.random.randint(1234)).permutation(n=x_train.shape[0])
-    f_permute_train_set = theano.function(inputs=[],outputs=x_train,updates={x_train:x_train[randix],t_train:t_train[randix]})
+    update_permutation = OrderedDict()
+    update_permutation[x_train] = x_train[randix]
+    update_permutation[t_train] = t_train[randix]
+    f_permute_train_set = theano.function(inputs=[],outputs=x_train,updates=update_permutation)
 
     statuses = {}
     statuses['nll_train'] = []
