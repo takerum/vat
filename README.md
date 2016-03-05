@@ -28,9 +28,9 @@ python train_mnist_sup.py --cost_type=VAT_finite_diff --epsilon=2.1 --layer_size
 ```
 python train_mnist_semisup.py --cost_type=VAT_finite_diff --epsilon=0.3 --layer_sizes=784-1200-1200-10 --save_filename=<filename>
 ```
-After training, the trained classifer will be saved with the name of `<filename> ` in ` ./trained_model `.
+After training, the trained classifer will be saved with `<filename> ` in ` ./trained_model `.
 
-You can obtain the test error of the trained classifier saved with the name of `<filename> ` by the following command:
+You can obtain the test error of the trained classifier saved with `<filename> ` by the following command:
 ```
 python test_mnist.py --load_filename=<filename>
 ```
