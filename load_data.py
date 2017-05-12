@@ -54,7 +54,7 @@ def load_mnist_for_semi_sup(n_l=1000, n_v=1000):
     _train_set_x = _train_set_x[rand_ind]
     _train_set_y = _train_set_y[rand_ind]
 
-    s_c = n_l / 10.0
+    s_c = int(n_l / 10.0)
     train_set_x = numpy.zeros((n_l, 28 ** 2))
     train_set_y = numpy.zeros(n_l)
     for i in xrange(10):
@@ -70,6 +70,7 @@ def load_mnist_for_semi_sup(n_l=1000, n_v=1000):
     train_set_y = train_set_y[rand_ind]
     valid_set_x = _train_set_x[:n_v]
     valid_set_y = _train_set_y[:n_v]
+    print valid_set_y
     # ul_train_set_x = _train_set_x[n_v:]
     train_set_ul_x = numpy.concatenate((train_set_x, _train_set_x[n_v:]), axis=0)
     train_set_ul_x = train_set_ul_x[numpy.random.permutation(train_set_ul_x.shape[0])]
