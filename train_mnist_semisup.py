@@ -26,7 +26,7 @@ Options:
   --epsilon=<float>                         [default: 2.0].
   --norm_constraint=<str>                   [default: L2].
   --num_power_iter=<N>                      [default: 1].
-  --num_labeled_samples=<N>                 [default: 1000].
+  --num_labeled_samples=<N>                 [default: 100].
   --num_validation_samples=<N>              [default: 1000].
   --seed=<N>                                [default: 1].
 """
@@ -98,6 +98,7 @@ def train(args):
     elif(args['--cost_type']=='VAT_finite_diff'):
         cost = costs.virtual_adversarial_training_finite_diff(x,t,model.forward_train,
                                               'CE',
+                                              xi = 1e-6,
                                               epsilon=float(args['--epsilon']),
                                               norm_constraint = args['--norm_constraint'],
                                               num_power_iter = int(args['--num_power_iter']),
@@ -188,15 +189,12 @@ def train(args):
     ul_i = 0
     for epoch in xrange(int(args['--num_epochs'])):
         cPickle.dump((statuses,args),open('./trained_model/'+'tmp-' + args['--save_filename'],'wb'),cPickle.HIGHEST_PROTOCOL)
-        
         f_permute_train_set()
         f_permute_ul_train_set()
-
         for it in xrange(int(args['--num_batch_it'])):
             f_train(l_i,ul_i)
             l_i = 0 if l_i>=n_train/batch_size-1 else l_i + 1
             ul_i = 0 if ul_i >=n_ul_train/ul_batch_size-1 else ul_i + 1
-
 
         sum_nll_train = numpy.sum(numpy.array([f_nll_train(i) for i in xrange(n_train/batch_size)]))*batch_size
         sum_error_train = numpy.sum(numpy.array([f_error_train(i) for i in xrange(n_train/batch_size)]))
@@ -209,10 +207,7 @@ def train(args):
         print "[Epoch]",str(epoch)
         print  "nll_train : " , statuses['nll_train'][-1], "error_train : ", statuses['error_train'][-1], \
                 "nll_test : " , statuses['nll_test'][-1],  "error_test : ", statuses['error_test'][-1]
-
-
         f_lr_decay()
-
     ### finetune batch stat ###
     f_finetune = theano.function(inputs=[ul_index],outputs=model.forward_for_finetuning_batch_stat(x),
                                  givens={x:ul_x_train[ul_batch_size*ul_index:ul_batch_size*(ul_index+1)]})
