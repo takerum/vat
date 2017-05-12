@@ -26,7 +26,7 @@ python train_mnist_sup.py --cost_type=VAT_finite_diff --epsilon=2.1 --layer_size
 ```
 ###VAT for semi-supervised learning on MNIST dataset (with 100 labeled samples)
 ```
-python train_mnist_semisup.py --cost_type=VAT_finite_diff --epsilon=0.3 --layer_sizes=784-1200-1200-10 --num_labeled_examples=100 --save_filename=<filename>
+python train_mnist_semisup.py --cost_type=VAT_finite_diff --epsilon=0.3 --layer_sizes=784-1200-1200-10 --num_labeled_samples=100 --save_filename=<filename>
 ```
 After finish training, the trained classifer will be saved with `<filename> ` in ` ./trained_model `.
 
