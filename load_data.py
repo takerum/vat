@@ -3,11 +3,13 @@ import cPickle
 import os
 import theano
 
+
 def load_mnist_dataset():
-    dataset = cPickle.load(open('dataset/mnist.pkl','rb'))
-    train_set_x = numpy.concatenate((dataset[0][0],dataset[1][0]),axis=0)
-    train_set_y = numpy.concatenate((dataset[0][1],dataset[1][1]),axis=0)
-    return ((train_set_x,train_set_y),(dataset[2][0],dataset[2][1]))
+    dataset = cPickle.load(open('dataset/mnist.pkl', 'rb'))
+    train_set_x = numpy.concatenate((dataset[0][0], dataset[1][0]), axis=0)
+    train_set_y = numpy.concatenate((dataset[0][1], dataset[1][1]), axis=0)
+    return ((train_set_x, train_set_y), (dataset[2][0], dataset[2][1]))
+
 
 def _shared_dataset(data_xy):
     data_x, data_y = data_xy
@@ -16,6 +18,7 @@ def _shared_dataset(data_xy):
     shared_y = theano.shared(numpy.asarray(data_y,
                                            dtype='int32'), borrow=True)
     return shared_x, shared_y
+
 
 def load_mnist_full():
     dataset = load_mnist_dataset()
@@ -28,7 +31,8 @@ def load_mnist_full():
 
     return [(train_set_x, train_set_y), (test_set_x, test_set_y)]
 
-def load_mnist_for_validation(n_v = 10000):
+
+def load_mnist_for_validation(n_v=10000):
     dataset = load_mnist_dataset()
 
     train_set_x, train_set_y = dataset[0]
@@ -44,6 +48,7 @@ def load_mnist_for_validation(n_v = 10000):
     valid_set_x, valid_set_y = _shared_dataset((valid_set_x, valid_set_y))
 
     return [(train_set_x, train_set_y), (valid_set_x, valid_set_y)]
+
 
 def load_mnist_for_semi_sup(n_l=1000, n_v=1000):
     dataset = load_mnist_dataset()

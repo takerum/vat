@@ -1,4 +1,4 @@
-import relu,lrelu
+import relu, lrelu
 import linear
 import sigmoid
 import softmax
